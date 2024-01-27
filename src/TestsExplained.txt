@@ -1,3 +1,7 @@
+Using a Multi-dimensional (2D) array for grid
+--> The size of the grid won't be changing
+--> The time of a get operation is constant
+
 First test, making the wordsearch grid from a file
 ---> checks the width
 ---> checks the height
