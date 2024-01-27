@@ -5,12 +5,13 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SolverDriverTest {
-    @Test
     @DisplayName("Checks if the possible words with the letter at the position are the same")
     @ParameterizedTest
     @MethodSource("provideStringArraysForCheckingWords")
@@ -19,7 +20,8 @@ class SolverDriverTest {
         // The below positions are defaulted as the method being tested does not use the coordinates
         Letter letterX = new Letter(letter, 0,0);
         String[] foundWords = solverDriver.getArrayOfWordsWithLetterAtPos(allWords, letterX, pos);
-
+        System.out.println(Arrays.toString(expectedWords));
+        System.out.println(Arrays.toString(foundWords));
         assertArrayEquals(expectedWords, foundWords);
     }
 

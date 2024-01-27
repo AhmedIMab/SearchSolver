@@ -7,4 +7,11 @@ First test, making the wordsearch grid from a file
 ---> checks the height
 
 Second test, populating the grid
+--> Changes the grid to a array of strings (representing the rows)
+--> Checks the rows against the expected rows
+
+Third test, checking the possible words with a character at a position
+--> The method uses an arraylist because it will not know how many elements will be in the list
+
+
 
