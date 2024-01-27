@@ -6,3 +6,5 @@ First test, making the wordsearch grid from a file
 ---> checks the width
 ---> checks the height
 
+Second test, populating the grid
+
