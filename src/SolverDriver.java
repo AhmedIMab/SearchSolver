@@ -19,4 +19,10 @@ public class SolverDriver {
         String[] foundWords = new String[foundStrings.size()];
         return foundStrings.toArray(foundWords);
     }
+
+    public Direction[] findPossibleDirectionsFromPosition(int starting_x, int starting_y) {
+        System.out.println("To Implement");
+        Direction[] directions = {};
+        return directions;
+    }
 }
