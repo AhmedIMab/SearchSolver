@@ -57,4 +57,24 @@ class SolverDriverTest {
         );
     }
 
+    @DisplayName("Checks if a word can be made in a specific direction")
+    @ParameterizedTest
+    @MethodSource("provideWordsToCheckFromLetter")
+    void checkWordInDirectionFromLetter(String word, Letter letter, Direction direction, boolean expected_value) throws IOException {
+        SolverDriver solverDriver = new SolverDriver();
+        Grid g = new Grid("src\\grid1.txt");
+        boolean boolX = solverDriver.checkWordInDirectionFromLetter(word, letter, direction);
+        Assertions.assertEquals(expected_value, boolX);
+    }
+
+    private static Stream<Arguments> provideWordsToCheckFromLetter() {
+        return Stream.of(
+                Arguments.of("HORSE", new Letter('H', 0,0), Direction.RIGHT, true),
+                Arguments.of("HORSE", new Letter('H', 0,0), Direction.BOTTOMRIGHT, false),
+                Arguments.of("HORSE", new Letter('H', 0,0), Direction.DOWN, false),
+                Arguments.of("MOUSE", new Letter('D', 1,3), Direction.RIGHT, false),
+                Arguments.of("HORSE", new Letter('H', 0,0), Direction.DOWN, true)
+        );
+    }
+
 }
