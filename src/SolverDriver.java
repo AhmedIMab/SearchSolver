@@ -131,9 +131,8 @@ public class SolverDriver {
             ychange = -1;
         }
 
-
-
         Letter currentLetter = letter;
+        // Assume the method has given us the correct starting letter in the word
         int num_correct = 1;
         for (int i=1; i<word.length();i++) {
             currentLetter = g.getLetterAtCoord((currentLetter.xcoord+xchange), currentLetter.ycoord+ychange);
@@ -144,28 +143,6 @@ public class SolverDriver {
                 break;
             }
         }
-
-/*        for (int i=0; i<word.length();i++) {
-            System.out.println("Here! i: " + i);
-            if (currentLetter.letter == word.charAt(i)) {
-                num_correct += 1;
-                // When the first letter
-                if (num_correct == 1) {
-                    // Do nothing
-                }
-                else {
-                    currentLetter = g.getLetterAtCoord((currentLetter.xcoord+xchange), currentLetter.ycoord+ychange);
-                }
-
-                System.out.println("Current Letter x: " + currentLetter.xcoord);
-                System.out.println("Current Letter y: " +  currentLetter.ycoord);
-                System.out.println("NUM CORRECT:" + num_correct);
-            }
-            else {
-                found = false;
-                break;
-            }
-        }*/
 
         System.out.println(num_correct);
 

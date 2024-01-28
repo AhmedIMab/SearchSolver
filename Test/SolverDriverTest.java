@@ -73,7 +73,17 @@ class SolverDriverTest {
                 Arguments.of("HORSE", new Letter('H', 0,0), Direction.BOTTOMRIGHT, false),
                 Arguments.of("HORSE", new Letter('H', 0,0), Direction.DOWN, false),
                 Arguments.of("MOUSE", new Letter('D', 1,3), Direction.RIGHT, false),
-                Arguments.of("HORSE", new Letter('H', 0,0), Direction.DOWN, false)
+                Arguments.of("MOUSE", new Letter('M', 4,1), Direction.LEFT, true),
+                Arguments.of("MOUSE", new Letter('M', 4,1), Direction.UP, false),
+                Arguments.of("DOG", new Letter('D', 1,2), Direction.DOWN, true),
+                Arguments.of("DOG", new Letter('D', 1,2), Direction.RIGHT, false),
+                Arguments.of("BAT", new Letter('B', 2,2), Direction.BOTTOMRIGHT, true),
+                Arguments.of("BAT", new Letter('D', 1,2), Direction.LEFT, false),
+                Arguments.of("ABS", new Letter('A', 3,3), Direction.TOPLEFT, true),
+                Arguments.of("ABS", new Letter('A', 3,3), Direction.TOPRIGHT, false),
+                Arguments.of("ME", new Letter('M', 4,1), Direction.UP, true),
+                Arguments.of("ME", new Letter('M', 4,1), Direction.DOWN, false),
+                Arguments.of("UDA", new Letter('U', 2,1), Direction.BOTTOMLEFT, true)
         );
     }
 
