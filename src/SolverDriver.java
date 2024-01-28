@@ -152,4 +152,10 @@ public class SolverDriver {
 
         return found;
     }
+
+    // This method will only be called when the word has been confirmed to be in the wordsearch in the direction
+    public CoordinatePair[] getCoordsOfWordInGrid(Grid g, String word, Letter letter, Direction direction) {
+        CoordinatePair[] coords = new CoordinatePair[5];
+        return coords;
+    }
 }

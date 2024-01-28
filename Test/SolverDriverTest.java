@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SolverDriverTest {
@@ -78,7 +79,7 @@ class SolverDriverTest {
                 Arguments.of("DOG", new Letter('D', 1,2), Direction.DOWN, true),
                 Arguments.of("DOG", new Letter('D', 1,2), Direction.RIGHT, false),
                 Arguments.of("BAT", new Letter('B', 2,2), Direction.BOTTOMRIGHT, true),
-                Arguments.of("BAT", new Letter('D', 1,2), Direction.LEFT, false),
+                Arguments.of("BAT", new Letter('B', 2,2), Direction.LEFT, false),
                 Arguments.of("ABS", new Letter('A', 3,3), Direction.TOPLEFT, true),
                 Arguments.of("ABS", new Letter('A', 3,3), Direction.TOPRIGHT, false),
                 Arguments.of("ME", new Letter('M', 4,1), Direction.UP, true),
@@ -87,4 +88,47 @@ class SolverDriverTest {
         );
     }
 
+
+    // To test the coords and avoid issues with objects of CoordinatePair, format will be comparing 2 integer arrays
+    // Only given words actually in the wordsearch as the method being tested will only be run after checking the word can be made
+    @DisplayName("Tests to see if the coordinates for making a word are correct")
+    @ParameterizedTest
+    @MethodSource("provideWordsToCheckCoords")
+    void getCoordsOfWordInGrid(String word, Letter letter, Direction direction, Integer[] expectedCoords) throws IOException {
+        SolverDriver solverDriver = new SolverDriver();
+        Grid g = new Grid("src\\grid1.txt");
+        CoordinatePair[] coordinates = solverDriver.getCoordsOfWordInGrid(g, word, letter, direction);
+        Integer[] calculatedCoords = new Integer[word.length()*2];
+        for (int i=0; i<calculatedCoords.length; i=i+2) {
+            calculatedCoords[i] = coordinates[i].getXcoord();
+            calculatedCoords[i+1] = coordinates[i].getYcoord();
+        }
+
+        Assertions.assertArrayEquals(expectedCoords, calculatedCoords);
+    }
+
+    private static Stream<Arguments> provideWordsToCheckCoords() {
+        return Stream.of(
+                Arguments.of("HORSE", new Letter('H', 0,0), Direction.RIGHT, new Integer[]{0,0,1,0,2,0,3,0,4,0}),
+                Arguments.of("BAT", new Letter('B',2,2), Direction.BOTTOMRIGHT, new Integer[]{2,2,3,3,4,4}),
+                Arguments.of("DOG", new Letter('D',1,2), Direction.DOWN, new Integer[]{1,2,1,3,1,4}),
+                Arguments.of("OBOC", new Letter('O',3,1), Direction.BOTTOMLEFT, new Integer[]{3,1,2,2,1,3,0,4}),
+                Arguments.of("MO", new Letter('M',4,1), Direction.LEFT, new Integer[]{4,1,3,1}),
+                Arguments.of("TABSH", new Letter('T',4,4), Direction.TOPLEFT, new Integer[]{4,4,3,3,2,2,1,1,0,0}),
+                Arguments.of("DS", new Letter('D',1,2), Direction.UP, new Integer[]{1,2,1,1}),
+                Arguments.of("ADUS", new Letter('A',0,3), Direction.TOPRIGHT, new Integer[]{0,3,1,2,2,1,3,0})
+        );
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
