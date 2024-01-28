@@ -93,8 +93,16 @@ public class SolverDriver {
         return directions.toArray(foundDirections);
     }
 
-    public boolean checkWordInDirectionFromLetter(String word, Letter letter, Direction direction) {
+    public boolean checkWordInDirectionFromLetter(Grid g, String word, Letter letter, Direction direction) {
         boolean found = false;
+        if (direction == Direction.RIGHT) {
+            int xchange = 1;
+            int ychange = 1;
+        }
+
+        for (int i=0; i<word.length();i++) {
+            if
+        }
 
         return found;
     }

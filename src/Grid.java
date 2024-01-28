@@ -55,4 +55,7 @@ public class Grid {
     public int getWidth() {
         return this.width;
     }
+
+    public Letter getLetterAtCoord(int xcoord, int ycoord) {
+    }
 }
