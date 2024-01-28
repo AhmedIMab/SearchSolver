@@ -8,7 +8,7 @@ public class SolverDriver {
         System.out.println("Welcome to Search Solver!");
         String[] words = {"HORSE", "MOUSE", "CAT", "DOG", "BAT"};
         Grid g = new Grid("src\\grid1.txt");
-        // s.findPossibleDirectionsFromPosition(g, 0, 0);
+        // System.out.println(g.mainGrid[2][3].letter);
     }
 
     public String[] getArrayOfWordsWithLetterAtPos(String[] words, Letter letterX, int pos) {
@@ -95,13 +95,83 @@ public class SolverDriver {
 
     public boolean checkWordInDirectionFromLetter(Grid g, String word, Letter letter, Direction direction) {
         boolean found = false;
+        int xchange = 0;
+        int ychange = 0;
         if (direction == Direction.RIGHT) {
-            int xchange = 1;
-            int ychange = 1;
+            xchange = 1;
+            ychange = 0;
+        }
+        else if (direction == Direction.BOTTOMRIGHT) {
+            xchange = 1;
+            ychange = 1;
+        }
+        else if (direction == Direction.DOWN) {
+            xchange = 0;
+            ychange = 1;
+        }
+        else if (direction == Direction.BOTTOMLEFT) {
+            xchange = -1;
+            ychange = 1;
+        }
+        else if (direction == Direction.LEFT) {
+            xchange = -1;
+            ychange = 0;
+        }
+        else if (direction == Direction.TOPLEFT) {
+            xchange = -1;
+            ychange = -1;
+        }
+        else if (direction == Direction.UP) {
+            xchange = 0;
+            ychange = -1;
+        }
+        // Top right
+        else {
+            xchange = 1;
+            ychange = -1;
         }
 
-        //for (int i=0; i<word.length();i++) {
-        //}
+
+
+        Letter currentLetter = letter;
+        int num_correct = 1;
+        for (int i=1; i<word.length();i++) {
+            currentLetter = g.getLetterAtCoord((currentLetter.xcoord+xchange), currentLetter.ycoord+ychange);
+            if (currentLetter.letter == word.charAt(i)) {
+                num_correct += 1;
+            }
+            else {
+                break;
+            }
+        }
+
+/*        for (int i=0; i<word.length();i++) {
+            System.out.println("Here! i: " + i);
+            if (currentLetter.letter == word.charAt(i)) {
+                num_correct += 1;
+                // When the first letter
+                if (num_correct == 1) {
+                    // Do nothing
+                }
+                else {
+                    currentLetter = g.getLetterAtCoord((currentLetter.xcoord+xchange), currentLetter.ycoord+ychange);
+                }
+
+                System.out.println("Current Letter x: " + currentLetter.xcoord);
+                System.out.println("Current Letter y: " +  currentLetter.ycoord);
+                System.out.println("NUM CORRECT:" + num_correct);
+            }
+            else {
+                found = false;
+                break;
+            }
+        }*/
+
+        System.out.println(num_correct);
+
+        if (num_correct == word.length()) {
+            found = true;
+        }
 
         return found;
     }

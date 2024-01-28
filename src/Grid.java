@@ -37,7 +37,7 @@ public class Grid {
         int row = 0;
 
         while (line != null) {
-            System.out.println(line);
+            // System.out.println(line);
             for (int i=0; i<line.length(); i++) {
                 Letter l = new Letter(line.charAt(i), i, row);
                 mainGrid[i][row] = l;

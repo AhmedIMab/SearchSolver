@@ -73,7 +73,7 @@ class SolverDriverTest {
                 Arguments.of("HORSE", new Letter('H', 0,0), Direction.BOTTOMRIGHT, false),
                 Arguments.of("HORSE", new Letter('H', 0,0), Direction.DOWN, false),
                 Arguments.of("MOUSE", new Letter('D', 1,3), Direction.RIGHT, false),
-                Arguments.of("HORSE", new Letter('H', 0,0), Direction.DOWN, true)
+                Arguments.of("HORSE", new Letter('H', 0,0), Direction.DOWN, false)
         );
     }
 
