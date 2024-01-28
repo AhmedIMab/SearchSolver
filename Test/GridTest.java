@@ -57,18 +57,35 @@ class GridTest {
         }
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("Checks it can get a specific letter at a position in the grid")
     @CsvSource({
             "0,0, H",
             "2,0, R",
             "2,2, B",
-            "4,4, T",
-            "8,8, X"
+            "4,4, T"
     })
     void getLetterAtCoord(int xcoord, int ycoord, char expected) throws IOException {
         Grid g = new Grid("src\\grid1.txt");
         char letter = g.getLetterAtCoord(xcoord, ycoord).letter;
         Assertions.assertEquals(expected, letter);
+    }
+
+    @Test
+    @DisplayName("Check an exception is thrown if the xcoord or ycoord is outside the size of the grid")
+    void getLetterAtCoord2() throws IOException {
+        Grid g = new Grid("src\\grid1.txt");
+        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+            g.getLetterAtCoord(7,7);
+        });
+    }
+
+    @Test
+    @DisplayName("Check an exception is thrown if the xcoord or ycoord is negative")
+    void getLetterAtCoord3() throws IOException {
+        Grid g = new Grid("src\\grid1.txt");
+        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+            g.getLetterAtCoord(-5,-2);
+        });
     }
 }

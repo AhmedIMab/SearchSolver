@@ -63,7 +63,7 @@ class SolverDriverTest {
     void checkWordInDirectionFromLetter(String word, Letter letter, Direction direction, boolean expected_value) throws IOException {
         SolverDriver solverDriver = new SolverDriver();
         Grid g = new Grid("src\\grid1.txt");
-        boolean boolX = solverDriver.checkWordInDirectionFromLetter(word, letter, direction);
+        boolean boolX = solverDriver.checkWordInDirectionFromLetter(g, word, letter, direction);
         Assertions.assertEquals(expected_value, boolX);
     }
 

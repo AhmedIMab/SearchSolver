@@ -57,5 +57,9 @@ public class Grid {
     }
 
     public Letter getLetterAtCoord(int xcoord, int ycoord) {
+        if (xcoord > getWidth() | ycoord > getHeight()) {
+            throw new IndexOutOfBoundsException("Outside the range of the grid");
+        }
+        return mainGrid[xcoord][ycoord];
     }
 }

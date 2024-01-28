@@ -100,9 +100,8 @@ public class SolverDriver {
             int ychange = 1;
         }
 
-        for (int i=0; i<word.length();i++) {
-            if
-        }
+        //for (int i=0; i<word.length();i++) {
+        //}
 
         return found;
     }
