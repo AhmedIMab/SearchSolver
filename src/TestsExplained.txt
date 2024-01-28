@@ -13,5 +13,8 @@ Second test, populating the grid
 Third test, checking the possible words with a character at a position
 --> The method uses an arraylist because it will not know how many elements will be in the list
 
+Fourth test, checking the possible directions
+--> Realised the comparison test uses array comparison which compares order
+---> However, order is irrelevant in this case so comparison going to be changed to ignore order by sorting both direction arrays
 
 

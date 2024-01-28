@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -21,8 +22,8 @@ class SolverDriverTest {
         // The below positions are defaulted as the method being tested does not use the coordinates
         Letter letterX = new Letter(letter, 0,0);
         String[] foundWords = solverDriver.getArrayOfWordsWithLetterAtPos(allWords, letterX, pos);
-        System.out.println(Arrays.toString(expected_words));
-        System.out.println(Arrays.toString(foundWords));
+        // System.out.println(Arrays.toString(expected_words));
+        // System.out.println(Arrays.toString(foundWords));
         Assertions.assertArrayEquals(expected_words, foundWords);
     }
 
@@ -36,16 +37,19 @@ class SolverDriverTest {
     @DisplayName("Checks if the possible directions to make a word from a starting position are valid")
     @ParameterizedTest
     @MethodSource("providePositionsForCheckingDirections")
-    void findPossibleDirectionsAtPos(int starting_x, int starting_y, Direction[] expected_directions) {
+    void findPossibleDirectionsAtPos(int starting_x, int starting_y, Direction[] expected_directions) throws IOException {
         SolverDriver solverDriver = new SolverDriver();
-        Direction[] directions = solverDriver.findPossibleDirectionsFromPosition(starting_x,starting_y);
+        Grid g = new Grid("src\\grid1.txt");
+        Direction[] directions = solverDriver.findPossibleDirectionsFromPosition(g, starting_x,starting_y);
+        Arrays.sort(directions);
+        Arrays.sort(expected_directions);
         Assertions.assertArrayEquals(expected_directions, directions);
     }
 
     private static Stream<Arguments> providePositionsForCheckingDirections() {
         return Stream.of(
                 Arguments.of(0,0,new Direction[]{Direction.RIGHT, Direction.BOTTOMRIGHT, Direction.DOWN}),
-                Arguments.of(1,0,new Direction[]{Direction.RIGHT, Direction.BOTTOMRIGHT, Direction.DOWN, Direction.BOTTOMLEFT, Direction.LEFT})
+                Arguments.of(1,0,new Direction[]{Direction.RIGHT, Direction.BOTTOMRIGHT, Direction.DOWN, Direction.BOTTOMLEFT, Direction.LEFT}),
                 Arguments.of(4,0,new Direction[]{Direction.LEFT,Direction.BOTTOMLEFT,Direction.DOWN}),
                 Arguments.of(2,2,new Direction[]{Direction.RIGHT, Direction.BOTTOMRIGHT, Direction.DOWN,Direction.BOTTOMLEFT,Direction.LEFT,Direction.TOPLEFT,Direction.UP,Direction.TOPRIGHT}),
                 Arguments.of(0,4,new Direction[]{Direction.UP, Direction.TOPRIGHT, Direction.RIGHT}),
