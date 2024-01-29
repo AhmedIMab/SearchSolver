@@ -99,9 +99,11 @@ class SolverDriverTest {
         Grid g = new Grid("src\\grid1.txt");
         CoordinatePair[] coordinates = solverDriver.getCoordsOfWordInGrid(g, word, letter, direction);
         Integer[] calculatedCoords = new Integer[word.length()*2];
+        int ptr2 = 0;
         for (int i=0; i<calculatedCoords.length; i=i+2) {
-            calculatedCoords[i] = coordinates[i].getXcoord();
-            calculatedCoords[i+1] = coordinates[i].getYcoord();
+            calculatedCoords[i] = coordinates[ptr2].getXcoord();
+            calculatedCoords[i+1] = coordinates[ptr2].getYcoord();
+            ptr2 += 1;
         }
 
         Assertions.assertArrayEquals(expectedCoords, calculatedCoords);

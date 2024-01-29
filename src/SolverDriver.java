@@ -93,20 +93,17 @@ public class SolverDriver {
         return directions.toArray(foundDirections);
     }
 
-    public boolean checkWordInDirectionFromLetter(Grid g, String word, Letter letter, Direction direction) {
-        boolean found = false;
+    public static Integer[] getChangeInCoordsForTraversing(Direction direction) {
         int xchange = 0;
         int ychange = 0;
         if (direction == Direction.RIGHT) {
             xchange = 1;
-            ychange = 0;
         }
         else if (direction == Direction.BOTTOMRIGHT) {
             xchange = 1;
             ychange = 1;
         }
         else if (direction == Direction.DOWN) {
-            xchange = 0;
             ychange = 1;
         }
         else if (direction == Direction.BOTTOMLEFT) {
@@ -115,14 +112,12 @@ public class SolverDriver {
         }
         else if (direction == Direction.LEFT) {
             xchange = -1;
-            ychange = 0;
         }
         else if (direction == Direction.TOPLEFT) {
             xchange = -1;
             ychange = -1;
         }
         else if (direction == Direction.UP) {
-            xchange = 0;
             ychange = -1;
         }
         // Top right
@@ -130,6 +125,15 @@ public class SolverDriver {
             xchange = 1;
             ychange = -1;
         }
+
+        return new Integer[]{xchange,ychange};
+    }
+
+    public boolean checkWordInDirectionFromLetter(Grid g, String word, Letter letter, Direction direction) {
+        boolean found = false;
+        Integer[] change = getChangeInCoordsForTraversing(direction);
+        int xchange = change[0];
+        int ychange = change[1];
 
         Letter currentLetter = letter;
         // Assume the method has given us the correct starting letter in the word
@@ -155,7 +159,19 @@ public class SolverDriver {
 
     // This method will only be called when the word has been confirmed to be in the wordsearch in the direction
     public CoordinatePair[] getCoordsOfWordInGrid(Grid g, String word, Letter letter, Direction direction) {
-        CoordinatePair[] coords = new CoordinatePair[5];
+        CoordinatePair[] coords = new CoordinatePair[word.length()];
+        Integer[] change = getChangeInCoordsForTraversing(direction);
+        int xchange = change[0];
+        int ychange = change[1];
+
+        coords[0] = new CoordinatePair(letter.xcoord, letter.ycoord);
+
+        Letter current_letter = letter;
+        for (int i=1; i<word.length();i++) {
+            current_letter = g.getLetterAtCoord((current_letter.xcoord+xchange), current_letter.ycoord+ychange);
+            coords[i] = new CoordinatePair(current_letter.xcoord,current_letter.ycoord);
+        }
+
         return coords;
     }
 }
