@@ -11,6 +11,10 @@ public class SolverDriver {
         // System.out.println(g.mainGrid[2][3].letter);
     }
 
+    public Direction[] findDirectionsToMakeWord(String word, Letter letter) {
+
+    }
+
     public String[] getArrayOfWordsWithLetterAtPos(String[] words, Letter letterX, int pos) {
         // Assuming the potentially all the words to find could be
         // Nope, have to use an ArrayList as otherwise filled with null values

@@ -88,7 +88,6 @@ class SolverDriverTest {
         );
     }
 
-
     // To test the coords and avoid issues with objects of CoordinatePair, format will be comparing 2 integer arrays
     // Only given words actually in the wordsearch as the method being tested will only be run after checking the word can be made
     @DisplayName("Tests to see if the coordinates for making a word are correct")
@@ -120,6 +119,15 @@ class SolverDriverTest {
                 Arguments.of("DS", new Letter('D',1,2), Direction.UP, new Integer[]{1,2,1,1}),
                 Arguments.of("ADUS", new Letter('A',0,3), Direction.TOPRIGHT, new Integer[]{0,3,1,2,2,1,3,0})
         );
+    }
+
+    @ParameterizedTest
+    @DisplayName("Checks if the program can determine the directions that the word can be made")
+    @MethodSource("provideWordsToCheckDirections")
+    void findDirectionsToMakeWord(String word, Letter letter, Direction[] expected_directions) throws IOException {
+        SolverDriver solverDriver = new SolverDriver();
+        Grid g = new Grid("grid2.txt");
+        Direction[] calculated_directions = solverDriver.findDirectionsToMakeWord(word, letter);
     }
 }
 
