@@ -63,7 +63,8 @@ class GridTest {
             "0,0, H",
             "2,0, R",
             "2,2, B",
-            "4,4, T"
+            "4,4, T",
+            "1,3, O"
     })
     void getLetterAtCoord(int xcoord, int ycoord, char expected) throws IOException {
         Grid g = new Grid("src\\grid1.txt");
