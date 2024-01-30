@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.IOException;
-import java.lang.foreign.GroupLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -130,7 +129,7 @@ class SolverDriverTest {
     void getAllCoordinatePairsOfWords(Grid g, String[] words, Integer[][] expected_coordinatePairs) {
         SolverDriver solverDriver = new SolverDriver();
         LinkedHashMap<String, CoordinatePair[]> calculatedHashmap = solverDriver.getAllCoordinatePairsOfWords(g, words);
-        int ptr2 = 0;
+        int ptr2;
         for (int i=0;i<words.length; i++) {
             ptr2 = 0;
             String wordX = words[i];
@@ -150,10 +149,10 @@ class SolverDriverTest {
 
     private static Stream<Arguments> provideWordsAndCoordinatePairs() throws IOException {
         return Stream.of(
-                Arguments.of(new Grid("grid1.txt"), new String[]{"HORSE", "BAT", "DOG", "MOUSE", "MO"}, new Integer[][]{
+                Arguments.of(new Grid("src\\grid1.txt"), new String[]{"HORSE", "BAT", "DOG", "MOUSE", "MO"}, new Integer[][]{
                         {0,0,1,0,2,0,3,0,4,0}, {2,2,3,3,4,4}, {1,2,1,3,1,4}, {4,1,3,1,2,1,1,1,0,1}, {4,1,4,2}
                 }),
-                Arguments.of(new Grid("grid2.txt"), new String[]{"BARACK", "CLAY", "NOPE", "BAN", "OPEN", "COPE", "DOG", "SORE", "END"}, new Integer[][] {
+                Arguments.of(new Grid("src\\grid2.txt"), new String[]{"BARACK", "CLAY", "NOPE", "BAN", "OPEN", "COPE", "DOG", "SORE", "END"}, new Integer[][] {
                         {0,0,1,0,2,0,3,0,4,0,5,0}, {3,1,2,1,1,1,0,1}, {2,2,3,2,4,2,5,2}, {0,0,1,1,2,2}, {3,2,2,3,1,4,0,5}, {4,5,3,4,2,3,1,2}, {3,5,3,4,3,3}, {2,5,3,4,4,3,5,2}, {5,2,5,3,5,4}
                 })
         );

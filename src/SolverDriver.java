@@ -1,8 +1,5 @@
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 public class SolverDriver {
     public static void main(String[] args) throws IOException {
@@ -17,6 +14,44 @@ public class SolverDriver {
     public LinkedHashMap<String, CoordinatePair[]> getAllCoordinatePairsOfWords(Grid g, String[] words) {
         // Linked HashMap used as it is preferred to have the order of words maintained
         LinkedHashMap<String, CoordinatePair[]> allWordCoordinates = new LinkedHashMap<>();
+        List<String> wordsToSearch = new ArrayList<>(Arrays.asList(words));
+
+        int num_found = 0;
+
+        // Loops through the whole grid and tries to find every word depending on the current letter in the grid
+        // Once it finds the word and the direction to make it, gets the coordinates for making the word
+        // Adds it to the hashmap and return once all words were found or the grid has been fully traversed
+        // Outer for loop loops through the rows, inner loops through every column
+        for (int row=0; row<g.mainGrid.length; row++) {
+            for (int col=0; col<g.mainGrid[row].length; col++) {
+                if (num_found == words.length) {
+                    return allWordCoordinates;
+                }
+                Letter letterX = g.mainGrid[col][row];
+                Direction[] possible_directions = findPossibleDirectionsFromPosition(g, letterX.xcoord, letterX.ycoord);
+                // New String[0] will create an appropriately sized array when creating the array as opposed to an array with a specific number of elements
+                String[] possible_words = getArrayOfWordsWithLetterAtPos(wordsToSearch.toArray(new String[0]), letterX, 0);
+
+                // For every possible word that can be made
+                for (int i=0; i<possible_words.length; i++) {
+                    String possible_wordX = possible_words[i];
+                    if (!allWordCoordinates.containsKey(possible_wordX)) {
+                        // For every possible direction
+                        for (int j=0; j<possible_directions.length; j++) {
+                            Direction possible_directionX = possible_directions[j];
+                            // If the word can be made
+                            if (checkWordInDirectionFromLetter(g, possible_wordX, letterX, possible_directionX)) {
+                                CoordinatePair[] cp = getCoordsOfWordInGrid(g,possible_wordX,letterX,possible_directionX);
+                                allWordCoordinates.put(possible_wordX,cp);
+                                num_found += 1;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         return allWordCoordinates;
     }
 
