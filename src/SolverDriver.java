@@ -1,5 +1,7 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class SolverDriver {
@@ -9,6 +11,13 @@ public class SolverDriver {
         String[] words = {"HORSE", "MOUSE", "CAT", "DOG", "BAT"};
         Grid g = new Grid("src\\grid1.txt");
         // System.out.println(g.mainGrid[2][3].letter);
+    }
+
+    // The main method to find all the words and add them to a linked hashmap
+    public LinkedHashMap<String, CoordinatePair[]> getAllCoordinatePairsOfWords(Grid g, String[] words) {
+        // Linked HashMap used as it is preferred to have the order of words maintained
+        LinkedHashMap<String, CoordinatePair[]> allWordCoordinates = new LinkedHashMap<>();
+        return allWordCoordinates;
     }
 
 

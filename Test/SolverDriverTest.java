@@ -7,8 +7,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.IOException;
+import java.lang.foreign.GroupLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.stream.Stream;
 
 
@@ -104,7 +106,6 @@ class SolverDriverTest {
             calculatedCoords[i+1] = coordinates[ptr2].getYcoord();
             ptr2 += 1;
         }
-
         Assertions.assertArrayEquals(expectedCoords, calculatedCoords);
     }
 
@@ -121,6 +122,42 @@ class SolverDriverTest {
         );
     }
 
+
+    @ParameterizedTest
+    @DisplayName("Checks if the LinkedHashMap returned has the right coordinates for the specific word")
+    @MethodSource("provideWordsAndCoordinatePairs")
+    // Easier to make an integer array which holds x coordinate followed by y coordinate and then compare 2 integer arrays
+    void getAllCoordinatePairsOfWords(Grid g, String[] words, Integer[][] expected_coordinatePairs) {
+        SolverDriver solverDriver = new SolverDriver();
+        LinkedHashMap<String, CoordinatePair[]> calculatedHashmap = solverDriver.getAllCoordinatePairsOfWords(g, words);
+        int ptr2 = 0;
+        for (int i=0;i<words.length; i++) {
+            ptr2 = 0;
+            String wordX = words[i];
+            Integer[] expected_coordsX = expected_coordinatePairs[i];
+            CoordinatePair[] coordsX = calculatedHashmap.get(wordX);
+            // The length of the coordinate pair stored for the word * 2 as now converting to integer array
+            Integer[] integerCoordsX = new Integer[coordsX.length*2];
+            // Converts the coordinate array
+            for (int j=0; j<integerCoordsX.length; j=j+2) {
+                integerCoordsX[j] = coordsX[ptr2].getXcoord();
+                integerCoordsX[j+1] = coordsX[ptr2].getYcoord();
+                ptr2 += 1;
+            }
+            Assertions.assertArrayEquals(expected_coordsX, integerCoordsX);
+        }
+    }
+
+    private static Stream<Arguments> provideWordsAndCoordinatePairs() throws IOException {
+        return Stream.of(
+                Arguments.of(new Grid("grid1.txt"), new String[]{"HORSE", "BAT", "DOG", "MOUSE", "MO"}, new Integer[][]{
+                        {0,0,1,0,2,0,3,0,4,0}, {2,2,3,3,4,4}, {1,2,1,3,1,4}, {4,1,3,1,2,1,1,1,0,1}, {4,1,4,2}
+                }),
+                Arguments.of(new Grid("grid2.txt"), new String[]{"BARACK", "CLAY", "NOPE", "BAN", "OPEN", "COPE", "DOG", "SORE", "END"}, new Integer[][] {
+                        {0,0,1,0,2,0,3,0,4,0,5,0}, {3,1,2,1,1,1,0,1}, {2,2,3,2,4,2,5,2}, {0,0,1,1,2,2}, {3,2,2,3,1,4,0,5}, {4,5,3,4,2,3,1,2}, {3,5,3,4,3,3}, {2,5,3,4,4,3,5,2}, {5,2,5,3,5,4}
+                })
+        );
+    }
 }
 
 
