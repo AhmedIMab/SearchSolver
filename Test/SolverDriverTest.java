@@ -128,10 +128,13 @@ class SolverDriverTest {
         SolverDriver solverDriver = new SolverDriver();
         LinkedHashMap<String, CoordinatePair[]> calculatedHashmap = solverDriver.getAllCoordinatePairsOfWords(g, words);
         int ptr2;
-        for (int i=0;i<words.length; i++) {
+        for (int i=0;i<expected_coordinatePairs.length; i++) {
             ptr2 = 0;
             String wordX = words[i];
             Integer[] expected_coordsX = expected_coordinatePairs[i];
+            if (expected_coordsX.length == 0) {
+                continue;
+            }
             CoordinatePair[] coordsX = calculatedHashmap.get(wordX);
             // The length of the coordinate pair stored for the word * 2 as now converting to integer array
             Integer[] integerCoordsX = new Integer[coordsX.length*2];
@@ -154,6 +157,10 @@ class SolverDriverTest {
                 }),
                 Arguments.of(new Grid("src\\grid3.txt"), new String[]{"BARACK", "CLAY", "NOPE", "BAN", "OPEN", "COPE", "DOG", "SORE", "END"}, new Integer[][] {
                         {0,0,1,0,2,0,3,0,4,0,5,0}, {3,1,2,1,1,1,0,1}, {2,2,3,2,4,2,5,2}, {0,0,1,1,2,2}, {3,2,2,3,1,4,0,5}, {4,5,3,4,2,3,1,2}, {3,5,3,4,3,3}, {2,5,3,4,4,3,5,2}, {5,2,5,3,5,4}
+                }),
+                // BANK is not a word in the grid but END is. This test will check if the method can still get the coordinates for END
+                Arguments.of(new Grid("src\\grid3.txt"), new String[]{"BARACK", "CLAY", "NOPE", "BANK", "END"}, new Integer[][] {
+                        {0,0,1,0,2,0,3,0,4,0,5,0}, {3,1,2,1,1,1,0,1}, {2,2,3,2,4,2,5,2}, {}, {5,2,5,3,5,4}
                 })
         );
     }
