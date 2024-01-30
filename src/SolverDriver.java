@@ -1,4 +1,3 @@
-import javax.security.auth.kerberos.KeyTab;
 import java.io.IOException;
 import java.util.*;
 
@@ -28,13 +27,10 @@ public class SolverDriver {
             }
             System.out.println("\n");
         }
-
-        //System.out.println("\n" + "Test print: " + "\n" + Arrays.deepToString(g.mainGrid).replace("], ", "]\n"));
-        // System.out.println(g.mainGrid[2][3].letter);
     }
 
     // A method used for printing the grid
-    // Implements a linear search to
+    // Implements a linear search to find if the coordinate is in the array
     public static boolean partOfCoords(CoordinatePair[] allCoords, int xcoord, int ycoord) {
         for (int i=0; i<allCoords.length; i++) {
             if (xcoord == allCoords[i].getXcoord() && ycoord == allCoords[i].getYcoord()) {
@@ -72,7 +68,6 @@ public class SolverDriver {
                         // For every possible direction
                         for (int j=0; j<possible_directions.length; j++) {
                             Direction possible_directionX = possible_directions[j];
-                            boolean canBeMade = checkWordInDirectionFromLetter(g, possible_wordX, letterX, possible_directionX);
                             // If the word can be made
                             if (checkWordInDirectionFromLetter(g, possible_wordX, letterX, possible_directionX)) {
                                 CoordinatePair[] cp = getCoordsOfWordInGrid(g,possible_wordX,letterX,possible_directionX);
@@ -89,7 +84,6 @@ public class SolverDriver {
         return allWordCoordinates;
     }
 
-
     public String[] getArrayOfWordsWithLetterAtPos(String[] words, Letter letterX, int pos) {
         // Assuming the potentially all the words to find could be
         // Nope, have to use an ArrayList as otherwise filled with null values
@@ -103,9 +97,9 @@ public class SolverDriver {
         return foundStrings.toArray(foundWords);
     }
 
-    // Regardless of the word, this function tries to find the possible directions a word can be made
+    // Regardless of the word, this function tries to find the possible directions a word can be made by using the position
     public Direction[] findPossibleDirectionsFromPosition(Grid g, int starting_x, int starting_y) {
-        List<Direction> directions = new ArrayList<Direction>();
+        List<Direction> directions = new ArrayList<>();
         // For the top y rows
         if (starting_y == 0) {
             if (starting_x == 0) {
@@ -220,7 +214,7 @@ public class SolverDriver {
         int min_x_to_create = letter.xcoord + (word_length * xchange);
         int min_y_to_create = letter.ycoord + (word_length * ychange);
 
-        // A check so that it can predetermine whether the space to create the word in a specific direction in the grid is actually possible
+        // A check so that it can predetermine whether the space to create the word in a specific direction in the grid is actually possible,
         // depending on the grid size
         if (min_x_to_create > g.getWidth() | min_y_to_create > g.getHeight()) {
             return false;
@@ -246,7 +240,8 @@ public class SolverDriver {
         return found;
     }
 
-    // This method will only be called when the word has been confirmed to be in the wordsearch in the direction
+    // This method will only be called when the word has been confirmed to be in the wordsearch and in a specific direction
+    // Returns the coordinates of all the letters of the word
     public CoordinatePair[] getCoordsOfWordInGrid(Grid g, String word, Letter letter, Direction direction) {
         CoordinatePair[] coords = new CoordinatePair[word.length()];
         Integer[] change = getChangeInCoordsForTraversing(direction);
