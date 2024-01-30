@@ -7,7 +7,7 @@ public class SolverDriver {
         SolverDriver s = new SolverDriver();
         System.out.println("Welcome to Search Solver!");
         String[] words = {"CATTLE", "COW", "DUCK", "GOAT", "HORSE", "LAMB", "LLAMA", "PIG", "TURKEY", "YAK"};
-        Grid g = new Grid("src\\grid4.txt");
+        Grid g = new Grid("src\\examplegrid4-7x7.txt");
         LinkedHashMap<String, CoordinatePair[]> allWordCoordinates = s.getAllCoordinatePairsOfWords(g,words);
         for (String word : allWordCoordinates.keySet()) {
             System.out.println("Word: " + word + "\n");

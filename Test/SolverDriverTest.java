@@ -39,7 +39,7 @@ class SolverDriverTest {
     @MethodSource("providePositionsForCheckingDirections")
     void findPossibleDirectionsAtPos(int starting_x, int starting_y, Direction[] expected_directions) throws IOException {
         SolverDriver solverDriver = new SolverDriver();
-        Grid g = new Grid("src\\grid1.txt");
+        Grid g = new Grid("src\\examplegrid1-5x5.txt");
         Direction[] directions = solverDriver.findPossibleDirectionsFromPosition(g, starting_x,starting_y);
         Arrays.sort(directions);
         Arrays.sort(expected_directions);
@@ -62,7 +62,7 @@ class SolverDriverTest {
     @MethodSource("provideWordsToCheckFromLetter")
     void checkWordInDirectionFromLetter(String word, Letter letter, Direction direction, boolean expected_value) throws IOException {
         SolverDriver solverDriver = new SolverDriver();
-        Grid g = new Grid("src\\grid1.txt");
+        Grid g = new Grid("src\\examplegrid1-5x5.txt");
         boolean boolX = solverDriver.checkWordInDirectionFromLetter(g, word, letter, direction);
         Assertions.assertEquals(expected_value, boolX);
     }
@@ -94,7 +94,7 @@ class SolverDriverTest {
     @MethodSource("provideWordsToCheckCoords")
     void getCoordsOfWordInGrid(String word, Letter letter, Direction direction, Integer[] expectedCoords) throws IOException {
         SolverDriver solverDriver = new SolverDriver();
-        Grid g = new Grid("src\\grid1.txt");
+        Grid g = new Grid("src\\examplegrid1-5x5.txt");
         CoordinatePair[] coordinates = solverDriver.getCoordsOfWordInGrid(g, word, letter, direction);
         Integer[] calculatedCoords = new Integer[word.length()*2];
         int ptr2 = 0;
@@ -152,14 +152,14 @@ class SolverDriverTest {
 
     private static Stream<Arguments> provideWordsAndCoordinatePairs() throws IOException {
         return Stream.of(
-                Arguments.of(new Grid("src\\grid1.txt"), new String[]{"HORSE", "BAT", "DOG", "MOUSE", "MO"}, new Integer[][]{
+                Arguments.of(new Grid("src\\examplegrid1-5x5.txt"), new String[]{"HORSE", "BAT", "DOG", "MOUSE", "MO"}, new Integer[][]{
                         {0,0,1,0,2,0,3,0,4,0}, {2,2,3,3,4,4}, {1,2,1,3,1,4}, {4,1,3,1,2,1,1,1,0,1}, {4,1,4,2}
                 }),
-                Arguments.of(new Grid("src\\grid3.txt"), new String[]{"BARACK", "CLAY", "NOPE", "BAN", "OPEN", "COPE", "DOG", "SORE", "END"}, new Integer[][] {
+                Arguments.of(new Grid("src\\examplegrid3-6x6.txt"), new String[]{"BARACK", "CLAY", "NOPE", "BAN", "OPEN", "COPE", "DOG", "SORE", "END"}, new Integer[][] {
                         {0,0,1,0,2,0,3,0,4,0,5,0}, {3,1,2,1,1,1,0,1}, {2,2,3,2,4,2,5,2}, {0,0,1,1,2,2}, {3,2,2,3,1,4,0,5}, {4,5,3,4,2,3,1,2}, {3,5,3,4,3,3}, {2,5,3,4,4,3,5,2}, {5,2,5,3,5,4}
                 }),
                 // BANK is not a word in the grid but END is. This test will check if the method can still get the coordinates for END
-                Arguments.of(new Grid("src\\grid3.txt"), new String[]{"BARACK", "CLAY", "NOPE", "BANK", "END"}, new Integer[][] {
+                Arguments.of(new Grid("src\\examplegrid3-6x6.txt"), new String[]{"BARACK", "CLAY", "NOPE", "BANK", "END"}, new Integer[][] {
                         {0,0,1,0,2,0,3,0,4,0,5,0}, {3,1,2,1,1,1,0,1}, {2,2,3,2,4,2,5,2}, {}, {5,2,5,3,5,4}
                 })
         );
