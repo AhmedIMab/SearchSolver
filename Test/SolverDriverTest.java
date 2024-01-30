@@ -24,8 +24,6 @@ class SolverDriverTest {
         // The below positions are defaulted as the method being tested does not use the coordinates
         Letter letterX = new Letter(letter, 0,0);
         String[] foundWords = solverDriver.getArrayOfWordsWithLetterAtPos(allWords, letterX, pos);
-        // System.out.println(Arrays.toString(expected_words));
-        // System.out.println(Arrays.toString(foundWords));
         Assertions.assertArrayEquals(expected_words, foundWords);
     }
 
@@ -143,7 +141,9 @@ class SolverDriverTest {
                 integerCoordsX[j+1] = coordsX[ptr2].getYcoord();
                 ptr2 += 1;
             }
-            Assertions.assertEquals(Arrays.toString(expected_coordsX), Arrays.toString(integerCoordsX), "Coords: " + Arrays.toString(expected_coordsX) + " Matched: " + Arrays.toString(integerCoordsX));
+
+            System.out.println("Word: " + wordX + " Expected Coords: " + Arrays.toString(expected_coordsX) + " Calculated Coords: " + Arrays.toString(integerCoordsX));
+            Assertions.assertArrayEquals(expected_coordsX, integerCoordsX);
         }
     }
 
@@ -152,7 +152,7 @@ class SolverDriverTest {
                 Arguments.of(new Grid("src\\grid1.txt"), new String[]{"HORSE", "BAT", "DOG", "MOUSE", "MO"}, new Integer[][]{
                         {0,0,1,0,2,0,3,0,4,0}, {2,2,3,3,4,4}, {1,2,1,3,1,4}, {4,1,3,1,2,1,1,1,0,1}, {4,1,4,2}
                 }),
-                Arguments.of(new Grid("src\\grid2.txt"), new String[]{"BARACK", "CLAY", "NOPE", "BAN", "OPEN", "COPE", "DOG", "SORE", "END"}, new Integer[][] {
+                Arguments.of(new Grid("src\\grid3.txt"), new String[]{"BARACK", "CLAY", "NOPE", "BAN", "OPEN", "COPE", "DOG", "SORE", "END"}, new Integer[][] {
                         {0,0,1,0,2,0,3,0,4,0,5,0}, {3,1,2,1,1,1,0,1}, {2,2,3,2,4,2,5,2}, {0,0,1,1,2,2}, {3,2,2,3,1,4,0,5}, {4,5,3,4,2,3,1,2}, {3,5,3,4,3,3}, {2,5,3,4,4,3,5,2}, {5,2,5,3,5,4}
                 })
         );

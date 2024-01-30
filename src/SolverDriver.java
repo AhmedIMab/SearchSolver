@@ -31,7 +31,6 @@ public class SolverDriver {
                 Direction[] possible_directions = findPossibleDirectionsFromPosition(g, letterX.xcoord, letterX.ycoord);
                 // New String[0] will create an appropriately sized array when creating the array as opposed to an array with a specific number of elements
                 String[] possible_words = getArrayOfWordsWithLetterAtPos(wordsToSearch.toArray(new String[0]), letterX, 0);
-
                 // For every possible word that can be made
                 for (int i=0; i<possible_words.length; i++) {
                     String possible_wordX = possible_words[i];
@@ -39,6 +38,7 @@ public class SolverDriver {
                         // For every possible direction
                         for (int j=0; j<possible_directions.length; j++) {
                             Direction possible_directionX = possible_directions[j];
+                            boolean canBeMade = checkWordInDirectionFromLetter(g, possible_wordX, letterX, possible_directionX);
                             // If the word can be made
                             if (checkWordInDirectionFromLetter(g, possible_wordX, letterX, possible_directionX)) {
                                 CoordinatePair[] cp = getCoordsOfWordInGrid(g,possible_wordX,letterX,possible_directionX);
@@ -182,6 +182,16 @@ public class SolverDriver {
         int xchange = change[0];
         int ychange = change[1];
 
+        int word_length = word.length();
+        int min_x_to_create = letter.xcoord + (word_length * xchange);
+        int min_y_to_create = letter.ycoord + (word_length * ychange);
+
+        // A check so that it can predetermine whether the space to create the word in a specific direction in the grid is actually possible
+        // depending on the grid size
+        if (min_x_to_create > g.getWidth() | min_y_to_create > g.getHeight()) {
+            return false;
+        }
+
         Letter currentLetter = letter;
         // Assume the method has given us the correct starting letter in the word
         int num_correct = 1;
@@ -194,8 +204,6 @@ public class SolverDriver {
                 break;
             }
         }
-
-        System.out.println(num_correct);
 
         if (num_correct == word.length()) {
             found = true;
