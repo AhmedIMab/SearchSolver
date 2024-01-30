@@ -14,4 +14,8 @@ public class CoordinatePair {
     public int getYcoord() {
         return ycoord;
     }
+
+    public String toString() {
+        return "(" + xcoord + "," + ycoord + ")";
+    }
 }

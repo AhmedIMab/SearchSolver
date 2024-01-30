@@ -1,3 +1,4 @@
+import javax.security.auth.kerberos.KeyTab;
 import java.io.IOException;
 import java.util.*;
 
@@ -5,9 +6,42 @@ public class SolverDriver {
     public static void main(String[] args) throws IOException {
         SolverDriver s = new SolverDriver();
         System.out.println("Welcome to Search Solver!");
-        String[] words = {"HORSE", "MOUSE", "CAT", "DOG", "BAT"};
-        Grid g = new Grid("src\\grid1.txt");
+        String[] words = {"CATTLE", "COW", "DUCK", "GOAT", "HORSE", "LAMB", "LLAMA", "PIG", "TURKEY", "YAK"};
+        Grid g = new Grid("src\\grid4.txt");
+        LinkedHashMap<String, CoordinatePair[]> allWordCoordinates = s.getAllCoordinatePairsOfWords(g,words);
+        for (String word : allWordCoordinates.keySet()) {
+            System.out.println("Word: " + word + "\n");
+            CoordinatePair[] coordPairsX = allWordCoordinates.get(word);
+            for (int row=0; row<g.mainGrid.length; row++) {
+                StringBuilder rowX = new StringBuilder();
+                for (int col=0; col<g.mainGrid[row].length; col++) {
+                    // If it's part of the word, reveal it!
+                    if (partOfCoords(coordPairsX, col, row)) {
+                        rowX.append(g.getLetterAtCoord(col,row));
+                    }
+                    else {
+                        rowX.append("-");
+                    }
+                    rowX.append("  ");
+                }
+                System.out.println(rowX);
+            }
+            System.out.println("\n");
+        }
+
+        //System.out.println("\n" + "Test print: " + "\n" + Arrays.deepToString(g.mainGrid).replace("], ", "]\n"));
         // System.out.println(g.mainGrid[2][3].letter);
+    }
+
+    // A method used for printing the grid
+    // Implements a linear search to
+    public static boolean partOfCoords(CoordinatePair[] allCoords, int xcoord, int ycoord) {
+        for (int i=0; i<allCoords.length; i++) {
+            if (xcoord == allCoords[i].getXcoord() && ycoord == allCoords[i].getYcoord()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // The main method to find all the words and add them to a linked hashmap

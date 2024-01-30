@@ -8,4 +8,8 @@ public class Letter {
         this.xcoord = x;
         this.ycoord = y;
     }
+
+    public String toString() {
+        return String.valueOf(letter);
+    }
 }
