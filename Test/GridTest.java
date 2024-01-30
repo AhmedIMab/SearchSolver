@@ -57,7 +57,30 @@ class GridTest {
         }
     }
 
-    @ParameterizedTest
+    @Test
+    @DisplayName("Checks the grid created is the same as the expected grid, tests another grid")
+    void populateGrid2() throws IOException {
+        Grid g = new Grid("src\\grid3.txt");
+        // Compares the grids rows as string to the expected row as a string
+        String[] expectedRows = {"BARACK", "YALCSB", "OENOPE", "AOPGRN", "CEYOED", "NASDCA"};
+
+        String[] actualRows = new String[6];
+        // Convert the actual grid to rows of strings stored in a string array
+        for (int i=0; i<g.mainGrid.length; i++) {
+            StringBuilder rowX = new StringBuilder();
+            for (int j=0;j<actualRows.length; j++) {
+                rowX.append(g.mainGrid[j][i].letter);
+            }
+            actualRows[i] = String.valueOf(rowX);
+        }
+
+        for (int i=0; i<expectedRows.length; i++) {
+            // Check every row
+            Assertions.assertEquals(expectedRows[i], actualRows[i]);
+        }
+    }
+
+    @ParameterizedTest(name="Test {index}: x={0}, y={1}, expected_letter={2}")
     @DisplayName("Checks it can get a specific letter at a position in the grid")
     @CsvSource({
             "0,0, H",
@@ -68,6 +91,21 @@ class GridTest {
     })
     void getLetterAtCoord(int xcoord, int ycoord, char expected) throws IOException {
         Grid g = new Grid("src\\grid1.txt");
+        char letter = g.getLetterAtCoord(xcoord, ycoord).letter;
+        Assertions.assertEquals(expected, letter);
+    }
+
+    @ParameterizedTest(name="Test {index}: x={0}, y={1}, expected_letter={2}")
+    @DisplayName("Checks it can get a specific letter at a position in the grid, test another grid")
+    @CsvSource({
+            "0,0, B",
+            "4,2, P",
+            "1,1, A",
+            "3,3, G",
+            "5,5, A"
+    })
+    void getLetterAtCoord2(int xcoord, int ycoord, char expected) throws IOException {
+        Grid g = new Grid("src\\grid3.txt");
         char letter = g.getLetterAtCoord(xcoord, ycoord).letter;
         Assertions.assertEquals(expected, letter);
     }

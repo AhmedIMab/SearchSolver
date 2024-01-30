@@ -122,8 +122,8 @@ class SolverDriverTest {
     }
 
 
-    @ParameterizedTest
-    @DisplayName("Checks if the LinkedHashMap returned has the right coordinates for the specific word")
+    @ParameterizedTest(name = "{index} => grid={0},words={1},expected_ints={2}")
+    @DisplayName("Checks if the LinkedHashMap returned has the right coordinates for all the words")
     @MethodSource("provideWordsAndCoordinatePairs")
     // Easier to make an integer array which holds x coordinate followed by y coordinate and then compare 2 integer arrays
     void getAllCoordinatePairsOfWords(Grid g, String[] words, Integer[][] expected_coordinatePairs) {
@@ -143,7 +143,7 @@ class SolverDriverTest {
                 integerCoordsX[j+1] = coordsX[ptr2].getYcoord();
                 ptr2 += 1;
             }
-            Assertions.assertArrayEquals(expected_coordsX, integerCoordsX);
+            Assertions.assertEquals(Arrays.toString(expected_coordsX), Arrays.toString(integerCoordsX), "Coords: " + Arrays.toString(expected_coordsX) + " Matched: " + Arrays.toString(integerCoordsX));
         }
     }
 
