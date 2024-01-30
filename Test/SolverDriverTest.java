@@ -121,14 +121,6 @@ class SolverDriverTest {
         );
     }
 
-    @ParameterizedTest
-    @DisplayName("Checks if the program can determine the directions that the word can be made")
-    @MethodSource("provideWordsToCheckDirections")
-    void findDirectionsToMakeWord(String word, Letter letter, Direction[] expected_directions) throws IOException {
-        SolverDriver solverDriver = new SolverDriver();
-        Grid g = new Grid("grid2.txt");
-        Direction[] calculated_directions = solverDriver.findDirectionsToMakeWord(word, letter);
-    }
 }
 
 

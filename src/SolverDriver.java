@@ -11,9 +11,6 @@ public class SolverDriver {
         // System.out.println(g.mainGrid[2][3].letter);
     }
 
-    public Direction[] findDirectionsToMakeWord(String word, Letter letter) {
-
-    }
 
     public String[] getArrayOfWordsWithLetterAtPos(String[] words, Letter letterX, int pos) {
         // Assuming the potentially all the words to find could be
@@ -28,6 +25,7 @@ public class SolverDriver {
         return foundStrings.toArray(foundWords);
     }
 
+    // Regardless of the word, this function tries to find the possible directions a word can be made
     public Direction[] findPossibleDirectionsFromPosition(Grid g, int starting_x, int starting_y) {
         List<Direction> directions = new ArrayList<Direction>();
         // For the top y rows
@@ -133,6 +131,7 @@ public class SolverDriver {
         return new Integer[]{xchange,ychange};
     }
 
+    // Tries to find if a word can be made in a given direction
     public boolean checkWordInDirectionFromLetter(Grid g, String word, Letter letter, Direction direction) {
         boolean found = false;
         Integer[] change = getChangeInCoordsForTraversing(direction);
