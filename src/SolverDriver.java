@@ -270,7 +270,7 @@ public class SolverDriver {
 
         // A check so that it can predetermine whether the space to create the word in a specific direction in the grid is actually possible,
         // depending on the grid size
-        if (min_x_to_create > g.getWidth() || min_y_to_create > g.getHeight() || min_x_to_create < 0 || min_y_to_create < 0) {
+        if (min_x_to_create > g.getWidth() || min_y_to_create > g.getHeight() || min_x_to_create < -1 || min_y_to_create < -1) {
             return false;
         }
 
