@@ -37,9 +37,6 @@ public class Grid {
             }
         }
 
-        //System.out.println("total:" + total_lines);
-        //System.out.println("not part: " + not_part_of_grid);
-
         this.width = w;
         this.height = total_lines - not_part_of_grid;
         mainGrid = new Letter[this.width][this.height];
@@ -51,21 +48,16 @@ public class Grid {
         String line = file_reader.readLine();
         int row = 1;
         boolean last_line = false;
-        System.out.println("Height: " + this.height);
-        System.out.println("Width: " + this.width);
 
         while (line != null) {
-            System.out.println("This is line:" + line);
             if (row == total_lines || row == getHeight()+1) {
-                System.out.println("Final Line");
                 last_line = true;
             }
             if (SolverDriver.containsLetters(line) && last_line == false) {
                 // Not an empty line
-                System.out.println("Here we are");
-                for (int i=0; i<line.length(); i++) {
-                    Letter l = new Letter(line.charAt(i), i, row);
-                    mainGrid[i][row-1] = l;
+                for (int col=0; col<line.length(); col++) {
+                    Letter l = new Letter(line.charAt(col), col, row-1);
+                    mainGrid[col][row-1] = l;
                 }
             }
             if (last_line == true) {

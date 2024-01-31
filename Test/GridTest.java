@@ -105,7 +105,8 @@ class GridTest {
             "2,0, R",
             "2,2, B",
             "4,4, T",
-            "1,3, O"
+            "1,3, O",
+            "0,4, C"
     })
     void getLetterAtCoord(int xcoord, int ycoord, char expected) throws IOException {
         Grid g = new Grid("Grids\\examplegrid1-5x5.txt");

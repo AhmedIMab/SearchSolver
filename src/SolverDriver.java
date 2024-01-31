@@ -11,9 +11,9 @@ public class SolverDriver {
         System.out.println("To solve a specific wordsearch, please create a text file in the grids folder " +
                 "and fill it in with all the rows including a gap and a row with all the words you would like to find");
         System.out.println("Input the name of your file (please do not include the file extension): ");
-        String filename = s.nextLine() + ".txt";
-        Grid g = new Grid("Grids\\" + filename);
-        // Grid g = new Grid("Grids\\examplegrid6-15x15.txt");
+        String filename = "Grids\\" + s.nextLine() + ".txt";
+        //String filename = "Grids\\examplegrid1-5x5.txt";
+        Grid g = new Grid(filename);
         String[] words = getWordsFromFile(filename, g.getHeight());
         while (words == null) {
             System.out.println("No words were detected at the end of the file. " +
@@ -22,13 +22,10 @@ public class SolverDriver {
             filename = s.nextLine();
             words = getWordsFromFile(filename, g.getHeight());
         }
-        // String[] words = {"BINGO", "BOUTIQUE", "CABARET", "CARAVAN", "CHALET", "CHILDREN", "CRECHE", "DIVING", "GAMES",
-        //                  "PEDALO", "POOL", "POSTCARD", "REDCOAT", "SQUASH", "SWIMMING", "TENNIS", "TENTS", "VOLLEYBALL"};
         LinkedHashMap<String, CoordinatePair[]> allWordCoordinates = solverDriver.getAllCoordinatePairsOfWords(g,words);
         for (String word : allWordCoordinates.keySet()) {
             System.out.println("Word: " + word + "\n");
             CoordinatePair[] coordPairsX = allWordCoordinates.get(word);
-            System.out.println(Arrays.toString(coordPairsX));
             for (int row=0; row<g.mainGrid.length; row++) {
                 StringBuilder rowX = new StringBuilder();
                 for (int col=0; col<g.mainGrid[row].length; col++) {
@@ -47,6 +44,7 @@ public class SolverDriver {
         }
     }
 
+
     // Grid height is needed to detect in the case the user does not add any words at the end
     public static String[] getWordsFromFile(String filename, int gridHeight) throws IOException {
         String[] words;
@@ -61,12 +59,9 @@ public class SolverDriver {
             num_lines += 1;
         }
 
-        System.out.println("num_lines: " + num_lines);
-
         // This will check if they have added any lines to the grid. If the number of lines is the same as the grid rows (grid height + 1)
         // They haven't added any, and so return null
         if (!containsLetters(lastLine) || num_lines == gridHeight+1) {
-            System.out.println("HERERE!");
             return null;
         } else {
             words = lastLine.split(",");
@@ -74,8 +69,6 @@ public class SolverDriver {
                 words[i] = words[i].strip();
             }
         }
-
-        System.out.println("These are the words: " + Arrays.toString(words));
 
         return words;
     }
