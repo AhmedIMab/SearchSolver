@@ -19,7 +19,8 @@ public class SolverDriver {
             System.out.println("No words were detected at the end of the file. " +
                     "Please make sure the last line contains the words separated by commas");
             System.out.println("Input the name of your file (please do not include the file extension): ");
-            filename = s.nextLine();
+            filename = "Grids\\" + s.nextLine() + ".txt";
+            g = new Grid(filename);
             words = getWordsFromFile(filename, g.getHeight());
         }
         LinkedHashMap<String, CoordinatePair[]> allWordCoordinates = solverDriver.getAllCoordinatePairsOfWords(g,words);
