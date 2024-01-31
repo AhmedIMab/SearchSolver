@@ -167,7 +167,8 @@ class SolverDriverTest {
     @MethodSource("provideFilesToDetectWords")
     void getWordsFromFile(String filename, String[] expected_words) throws IOException {
         Grid g = new Grid(filename);
-        String[] words = SolverDriver.getWordsFromFile(filename);
+        System.out.println("This is the grid height!: " + g.getHeight());
+        String[] words = SolverDriver.getWordsFromFile(filename, g.getHeight());
         Assertions.assertArrayEquals(expected_words, words);
     }
 
@@ -176,7 +177,7 @@ class SolverDriverTest {
                 Arguments.of("Grids\\examplegrid1-5x5.txt", new String[]{"HORSE", "BAT", "DOG", "MOUSE", "CAT"}),
                 Arguments.of("Grids\\examplegrid3-6x6.txt", new String[]{"BARACK", "CLAY", "NOPE", "BAN", "OPEN", "COPE", "DOG", "SORE", "END"}),
                 Arguments.of("Grids\\examplegrid4-7x7.txt", new String[]{"CATTLE", "COW", "DUCK", "GOAT", "HORSE", "LAMB", "LLAMA", "PIG", "TURKEY", "YAK"}),
-                // This final test will have the words at the end of the file with no space inbetween to test if the program can handle the user writing the words without spaces
+                // This test will have the words at the end of the file with no space inbetween to test if the program can handle the user writing the words without spaces
                 Arguments.of("Grids\\examplegrid6-15x15.txt", new String[]{"BINGO", "BOUTIQUE", "CABARET", "CARAVAN", "CHALET", "CHILDREN", "CRECHE", "DIVING",
                         "GAMES", "PEDALO", "POOL", "POSTCARD", "REDCOAT", "SQUASH", "SWIMMING", "TENNIS", "TENTS", "VOLLEYBALL"}),
                 // The below will have a file with an empty line at the end just to test if the program can handle a file without any words at the end

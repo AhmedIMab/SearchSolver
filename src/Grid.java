@@ -30,10 +30,8 @@ public class Grid {
             line = file_reader.readLine();
             total_lines += 1;
             if (line != null) {
-                if (!line.equals("") && !line.equals(" ")) {
-                    // Not an empty line
-                }
-                else {
+                if (!SolverDriver.containsLetters(line)) {
+                    // An empty line
                     not_part_of_grid += 1;
                 }
             }
@@ -58,11 +56,11 @@ public class Grid {
 
         while (line != null) {
             System.out.println("This is line:" + line);
-            if (row == total_lines) {
+            if (row == total_lines || row == getHeight()+1) {
                 System.out.println("Final Line");
                 last_line = true;
             }
-            if (!line.equals("") && !line.equals(" ") && last_line == false) {
+            if (SolverDriver.containsLetters(line) && last_line == false) {
                 // Not an empty line
                 System.out.println("Here we are");
                 for (int i=0; i<line.length(); i++) {
@@ -70,9 +68,12 @@ public class Grid {
                     mainGrid[i][row-1] = l;
                 }
             }
+            if (last_line == true) {
+                break;
+            }
 
-            row += 1;
             line = file_reader.readLine();
+            row += 1;
         }
     }
 

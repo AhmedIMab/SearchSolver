@@ -14,13 +14,13 @@ public class SolverDriver {
         String filename = s.nextLine() + ".txt";
         Grid g = new Grid("Grids\\" + filename);
         // Grid g = new Grid("Grids\\examplegrid6-15x15.txt");
-        String[] words = getWordsFromFile(filename);
+        String[] words = getWordsFromFile(filename, g.getHeight());
         while (words == null) {
             System.out.println("No words were detected at the end of the file. " +
                     "Please make sure the last line contains the words separated by commas");
             System.out.println("Input the name of your file (please do not include the file extension): ");
             filename = s.nextLine();
-            words = getWordsFromFile(filename);
+            words = getWordsFromFile(filename, g.getHeight());
         }
         // String[] words = {"BINGO", "BOUTIQUE", "CABARET", "CARAVAN", "CHALET", "CHILDREN", "CRECHE", "DIVING", "GAMES",
         //                  "PEDALO", "POOL", "POSTCARD", "REDCOAT", "SQUASH", "SWIMMING", "TENNIS", "TENTS", "VOLLEYBALL"};
@@ -47,18 +47,26 @@ public class SolverDriver {
         }
     }
 
-    public static String[] getWordsFromFile(String filename) throws IOException {
+    // Grid height is needed to detect in the case the user does not add any words at the end
+    public static String[] getWordsFromFile(String filename, int gridHeight) throws IOException {
         String[] words;
         BufferedReader br = new BufferedReader(new FileReader(filename));
         String lastLine = "";
         String currentLine = br.readLine();
+        int num_lines = 0;
 
         while (currentLine != null) {
             lastLine = currentLine;
             currentLine = br.readLine();
+            num_lines += 1;
         }
 
-        if (lastLine == null) {
+        System.out.println("num_lines: " + num_lines);
+
+        // This will check if they have added any lines to the grid. If the number of lines is the same as the grid rows (grid height + 1)
+        // They haven't added any, and so return null
+        if (!containsLetters(lastLine) || num_lines == gridHeight+1) {
+            System.out.println("HERERE!");
             return null;
         } else {
             words = lastLine.split(",");
@@ -70,6 +78,16 @@ public class SolverDriver {
         System.out.println("These are the words: " + Arrays.toString(words));
 
         return words;
+    }
+
+    public static boolean containsLetters(String line) {
+        for (int i=0; i<line.length(); i++) {
+            if (Character.isLetter(line.charAt(i))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // A method used for printing the grid
