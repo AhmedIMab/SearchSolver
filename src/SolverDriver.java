@@ -17,7 +17,7 @@ public class SolverDriver {
         String[] words = getWordsFromFile(filename);
         while (words == null) {
             System.out.println("No words were detected at the end of the file. " +
-                    "Please make sure the last line contains the words separated by commas and a space");
+                    "Please make sure the last line contains the words separated by commas");
             System.out.println("Input the name of your file (please do not include the file extension): ");
             filename = s.nextLine();
             words = getWordsFromFile(filename);
@@ -49,20 +49,25 @@ public class SolverDriver {
 
     public static String[] getWordsFromFile(String filename) throws IOException {
         String[] words;
-        BufferedReader br = new BufferedReader(new FileReader(filename + ".txt"));
+        BufferedReader br = new BufferedReader(new FileReader(filename));
         String lastLine = "";
         String currentLine = br.readLine();
 
         while (currentLine != null) {
-            currentLine = br.readLine();
             lastLine = currentLine;
+            currentLine = br.readLine();
         }
 
         if (lastLine == null) {
             return null;
         } else {
-            words = lastLine.split(", ");
+            words = lastLine.split(",");
+            for (int i=0; i<words.length; i++) {
+                words[i] = words[i].strip();
+            }
         }
+
+        System.out.println("These are the words: " + Arrays.toString(words));
 
         return words;
     }

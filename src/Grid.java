@@ -17,18 +17,21 @@ public class Grid {
         else {
             // Main design assumption is the wordsearch is square (same height as width)
             // Sets the width to the length of the first line
+            h += 1;
             w = line.length();
         }
 
-        int not_part_of_grid = 0;
+        // The wordsearch will not work without being provided words
+        // setting not_part_of_grid to 1 represents the final line with words
+        int not_part_of_grid = 1;
+        int total_lines = 0;
 
         while (line != null) {
-            System.out.println("This is line:" + line);
             line = file_reader.readLine();
+            total_lines += 1;
             if (line != null) {
                 if (!line.equals("") && !line.equals(" ")) {
                     // Not an empty line
-                    h += 1;
                 }
                 else {
                     not_part_of_grid += 1;
@@ -36,29 +39,38 @@ public class Grid {
             }
         }
 
-        // The wordsearch will not work without being provided words
-        // represents the final line with words
-        not_part_of_grid += 1;
-
-        System.out.println("height:" + h);
+        //System.out.println("total:" + total_lines);
+        //System.out.println("not part: " + not_part_of_grid);
 
         this.width = w;
-        this.height = h - not_part_of_grid;
+        this.height = total_lines - not_part_of_grid;
         mainGrid = new Letter[this.width][this.height];
-        populateGrid(filename);
+        populateGrid(filename, total_lines);
     }
 
-    private void populateGrid(String filename) throws IOException {
+    private void populateGrid(String filename, int total_lines) throws IOException {
         BufferedReader file_reader = new BufferedReader(new FileReader(filename));
         String line = file_reader.readLine();
-        int row = 0;
+        int row = 1;
+        boolean last_line = false;
+        System.out.println("Height: " + this.height);
+        System.out.println("Width: " + this.width);
 
         while (line != null) {
-            // System.out.println(line);
-            for (int i=0; i<line.length(); i++) {
-                Letter l = new Letter(line.charAt(i), i, row);
-                mainGrid[i][row] = l;
+            System.out.println("This is line:" + line);
+            if (row == total_lines) {
+                System.out.println("Final Line");
+                last_line = true;
             }
+            if (!line.equals("") && !line.equals(" ") && last_line == false) {
+                // Not an empty line
+                System.out.println("Here we are");
+                for (int i=0; i<line.length(); i++) {
+                    Letter l = new Letter(line.charAt(i), i, row);
+                    mainGrid[i][row-1] = l;
+                }
+            }
+
             row += 1;
             line = file_reader.readLine();
         }
