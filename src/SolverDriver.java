@@ -10,14 +10,14 @@ public class SolverDriver {
                 "and fill it in with all the rows including a gap and a row with all the words you would like to find");
         // System.out.println("Please input the name of your file: ");
         // StringBuilder filename = new StringBuilder(s.nextLine() + ".txt");
-        Grid g = new Grid("Grids\\examplegrid6-15x15.txt");
-        String[] words = {"BINGO", "BOUTIQUE", "CABARET", "CARAVAN", "CHALET", "CHILDREN", "CRECHE", "DIVING", "GAMES",
-                          "PEDALO", "POOL", "POSTCARD", "REDCOAT", "SQUASH", "SWIMMING", "TENNIS", "TENTS", "TV ROOM", "VOLLEYBALL"};
+        // Grid g = new Grid("Grids\\examplegrid6-15x15.txt");
+        // String[] words = {"BINGO", "BOUTIQUE", "CABARET", "CARAVAN", "CHALET", "CHILDREN", "CRECHE", "DIVING", "GAMES",
+        //                  "PEDALO", "POOL", "POSTCARD", "REDCOAT", "SQUASH", "SWIMMING", "TENNIS", "TENTS", "VOLLEYBALL"};
         LinkedHashMap<String, CoordinatePair[]> allWordCoordinates = solverDriver.getAllCoordinatePairsOfWords(g,words);
         for (String word : allWordCoordinates.keySet()) {
             System.out.println("Word: " + word + "\n");
             CoordinatePair[] coordPairsX = allWordCoordinates.get(word);
-            //System.out.println(Arrays.toString(coordPairsX));
+            System.out.println(Arrays.toString(coordPairsX));
             for (int row=0; row<g.mainGrid.length; row++) {
                 StringBuilder rowX = new StringBuilder();
                 for (int col=0; col<g.mainGrid[row].length; col++) {
@@ -36,7 +36,7 @@ public class SolverDriver {
         }
     }
 
-    public static String[] getWordsFromFile(String filename) {
+    public static String[] getWordsFromFile(Grid g,String filename) throws IOException {
         return new String[5];
     }
 

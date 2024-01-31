@@ -1,19 +1,14 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.lang.foreign.StructLayout;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.stream.Stream;
-
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class SolverDriverTest {
     @DisplayName("Checks if the possible words with the letter at the position are the same")
@@ -168,12 +163,29 @@ class SolverDriverTest {
         );
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("Gets the words from the file to search for")
-    void getWordsFromFile() {
-
+    @MethodSource("provideFilesToDetectWords")
+    void getWordsFromFile(String filename, String[] expected_words) throws IOException {
+        Grid g = new Grid(filename);
+        String[] words = SolverDriver.getWordsFromFile(g, filename);
+        Assertions.assertArrayEquals(expected_words, words);
     }
+
+    private static Stream<Arguments> provideFilesToDetectWords() {
+        return Stream.of(
+                Arguments.of("Grids\\examplegrid1-5x5.txt", new String[]{"HORSE", "BAT", "DOG", "MOUSE", "CAT"}),
+                Arguments.of("Grids\\examplegrid3-6x6.txt", new String[]{"BARACK", "CLAY", "NOPE", "BAN", "OPEN", "COPE", "DOG", "SORE", "END"}),
+                Arguments.of("Grids\\examplegrid4-7x7.txt", new String[]{"CATTLE", "COW", "DUCK", "GOAT", "HORSE", "LAMB", "LLAMA", "PIG", "TURKEY", "YAK"}),
+                Arguments.of("Grids\\examplegrid6-15x15.txt", new String[]{"BINGO", "BOUTIQUE", "CABARET", "CARAVAN", "CHALET", "CHILDREN", "CRECHE", "DIVING",
+                        "GAMES", "PEDALO", "POOL", "POSTCARD", "REDCOAT", "SQUASH", "SWIMMING", "TENNIS", "TENTS", "VOLLEYBALL"})
+        );
+    }
+
+
+
 }
+
 
 
 
