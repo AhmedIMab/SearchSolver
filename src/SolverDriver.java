@@ -3,14 +3,18 @@ import java.util.*;
 
 public class SolverDriver {
     public static void main(String[] args) throws IOException {
-        SolverDriver s = new SolverDriver();
+        SolverDriver solverDriver = new SolverDriver();
+        Scanner s = new Scanner(System.in);
         System.out.println("Welcome to Search Solver!");
-        String[] words = {"CATTLE", "COW", "DUCK", "GOAT", "HORSE", "LAMB", "LLAMA", "PIG", "TURKEY", "YAK"};
-        Grid g = new Grid("src\\examplegrid4-7x7.txt");
-        LinkedHashMap<String, CoordinatePair[]> allWordCoordinates = s.getAllCoordinatePairsOfWords(g,words);
+        System.out.println("To solve a specific wordsearch, please create a text file in the grids folder \n" +
+                "and fill it in with all the rows including a gap and a row with all the words you would like to find");
+        System.out.println("Please input the name of your file: ");
+        // StringBuilder filename = new StringBuilder(s.nextLine() + ".txt");
+        LinkedHashMap<String, CoordinatePair[]> allWordCoordinates = solverDriver.getAllCoordinatePairsOfWords(g,words);
         for (String word : allWordCoordinates.keySet()) {
             System.out.println("Word: " + word + "\n");
             CoordinatePair[] coordPairsX = allWordCoordinates.get(word);
+            System.out.println(Arrays.toString(coordPairsX));
             for (int row=0; row<g.mainGrid.length; row++) {
                 StringBuilder rowX = new StringBuilder();
                 for (int col=0; col<g.mainGrid[row].length; col++) {

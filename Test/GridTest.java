@@ -12,7 +12,7 @@ class GridTest {
     @Test
     @DisplayName("height matches wordsearch height")
     void Grid() throws IOException {
-        Grid g = new Grid("src\\examplegrid1-5x5.txt");
+        Grid g = new Grid("Grids\\examplegrid1-5x5.txt");
         int h = g.getHeight();
         Assertions.assertEquals(5, h);
     }
@@ -20,7 +20,7 @@ class GridTest {
     @Test
     @DisplayName("width matches wordsearch width")
     void Grid2() throws IOException {
-        Grid g = new Grid("src\\examplegrid1-5x5.txt");
+        Grid g = new Grid("Grids\\examplegrid1-5x5.txt");
         int w = g.getWidth();
         Assertions.assertEquals(5, w);
     }
@@ -28,7 +28,7 @@ class GridTest {
     @Test
     @DisplayName("check height and width are the same")
     void Grid3() throws IOException {
-        Grid g = new Grid("src\\examplegrid1-5x5.txt");
+        Grid g = new Grid("Grids\\examplegrid1-5x5.txt");
         int h = g.getHeight();
         int w = g.getWidth();
         Assertions.assertEquals(h, w);
@@ -37,7 +37,7 @@ class GridTest {
     @Test
     @DisplayName("Check the grid created is the same as the expected grid")
     void populateGrid() throws IOException {
-        Grid g = new Grid("src\\examplegrid1-5x5.txt");
+        Grid g = new Grid("Grids\\examplegrid1-5x5.txt");
         // Compares the grids rows as string to the expected row as a string
         String[] expectedRows = {"HORSE", "ESUOM", "TDBRO", "AONAE", "CGYOT"};
 
@@ -60,7 +60,7 @@ class GridTest {
     @Test
     @DisplayName("Checks the grid created is the same as the expected grid, tests another grid")
     void populateGrid2() throws IOException {
-        Grid g = new Grid("src\\examplegrid3-6x6.txt");
+        Grid g = new Grid("Grids\\examplegrid3-6x6.txt");
         // Compares the grids rows as string to the expected row as a string
         String[] expectedRows = {"BARACK", "YALCSB", "OENOPE", "AOPGRN", "CEYOED", "NASDCA"};
 
@@ -90,7 +90,7 @@ class GridTest {
             "1,3, O"
     })
     void getLetterAtCoord(int xcoord, int ycoord, char expected) throws IOException {
-        Grid g = new Grid("src\\examplegrid1-5x5.txt");
+        Grid g = new Grid("Grids\\examplegrid1-5x5.txt");
         char letter = g.getLetterAtCoord(xcoord, ycoord).letter;
         Assertions.assertEquals(expected, letter);
     }
@@ -105,7 +105,7 @@ class GridTest {
             "5,5, A"
     })
     void getLetterAtCoord2(int xcoord, int ycoord, char expected) throws IOException {
-        Grid g = new Grid("src\\examplegrid3-6x6.txt");
+        Grid g = new Grid("Grids\\examplegrid3-6x6.txt");
         char letter = g.getLetterAtCoord(xcoord, ycoord).letter;
         Assertions.assertEquals(expected, letter);
     }
@@ -113,7 +113,7 @@ class GridTest {
     @Test
     @DisplayName("Check an exception is thrown if the xcoord or ycoord is outside the size of the grid")
     void getLetterAtCoord2() throws IOException {
-        Grid g = new Grid("src\\examplegrid1-5x5.txt");
+        Grid g = new Grid("Grids\\examplegrid1-5x5.txt");
         Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
             g.getLetterAtCoord(7,7);
         });
@@ -122,7 +122,7 @@ class GridTest {
     @Test
     @DisplayName("Check an exception is thrown if the xcoord or ycoord is negative")
     void getLetterAtCoord3() throws IOException {
-        Grid g = new Grid("src\\examplegrid1-5x5.txt");
+        Grid g = new Grid("Grids\\examplegrid1-5x5.txt");
         Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
             g.getLetterAtCoord(-5,-2);
         });
