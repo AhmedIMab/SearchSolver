@@ -1,4 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class SolverDriver {
@@ -8,9 +11,18 @@ public class SolverDriver {
         System.out.println("Welcome to Search Solver!");
         System.out.println("To solve a specific wordsearch, please create a text file in the grids folder \n" +
                 "and fill it in with all the rows including a gap and a row with all the words you would like to find");
-        // System.out.println("Please input the name of your file: ");
-        // StringBuilder filename = new StringBuilder(s.nextLine() + ".txt");
+        System.out.println("Input the name of your file (please do not include the file extension): ");
+        String filename = s.nextLine() + ".txt";
+        Grid g = new Grid(filename);
         // Grid g = new Grid("Grids\\examplegrid6-15x15.txt");
+        String[] words = getWordsFromFile(g, filename);
+        while (words == null) {
+            System.out.println("No words were detected at the end of the file. " +
+                    "Please make sure the last line contains the words separated by commas and a space");
+            System.out.println("Input the name of your file (please do not include the file extension): ");
+            filename = s.nextLine();
+            words = getWordsFromFile(g, filename);
+        }
         // String[] words = {"BINGO", "BOUTIQUE", "CABARET", "CARAVAN", "CHALET", "CHILDREN", "CRECHE", "DIVING", "GAMES",
         //                  "PEDALO", "POOL", "POSTCARD", "REDCOAT", "SQUASH", "SWIMMING", "TENNIS", "TENTS", "VOLLEYBALL"};
         LinkedHashMap<String, CoordinatePair[]> allWordCoordinates = solverDriver.getAllCoordinatePairsOfWords(g,words);
@@ -37,7 +49,23 @@ public class SolverDriver {
     }
 
     public static String[] getWordsFromFile(Grid g,String filename) throws IOException {
-        return new String[5];
+        String[] words;
+        BufferedReader br = new BufferedReader(new FileReader(filename + ".txt"));
+        String lastLine = "";
+        String currentLine = br.readLine();
+
+        while (currentLine != null) {
+            currentLine = br.readLine();
+            lastLine = currentLine;
+        }
+
+        if (lastLine == null) {
+            return null;
+        } else {
+            words = lastLine.split(", ");
+        }
+
+        return words;
     }
 
     // A method used for printing the grid

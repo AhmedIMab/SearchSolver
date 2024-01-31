@@ -5,7 +5,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.IOException;
-import java.lang.foreign.StructLayout;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.stream.Stream;
