@@ -17,7 +17,7 @@ public class SolverDriver {
         for (String word : allWordCoordinates.keySet()) {
             System.out.println("Word: " + word + "\n");
             CoordinatePair[] coordPairsX = allWordCoordinates.get(word);
-            System.out.println(Arrays.toString(coordPairsX));
+            //System.out.println(Arrays.toString(coordPairsX));
             for (int row=0; row<g.mainGrid.length; row++) {
                 StringBuilder rowX = new StringBuilder();
                 for (int col=0; col<g.mainGrid[row].length; col++) {
@@ -227,7 +227,7 @@ public class SolverDriver {
 
         // A check so that it can predetermine whether the space to create the word in a specific direction in the grid is actually possible,
         // depending on the grid size
-        if (min_x_to_create > g.getWidth() || min_y_to_create > g.getHeight()) {
+        if (min_x_to_create > g.getWidth() || min_y_to_create > g.getHeight() || min_x_to_create < 0 || min_y_to_create < 0) {
             return false;
         }
 
