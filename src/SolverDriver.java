@@ -8,9 +8,11 @@ public class SolverDriver {
         System.out.println("Welcome to Search Solver!");
         System.out.println("To solve a specific wordsearch, please create a text file in the grids folder \n" +
                 "and fill it in with all the rows including a gap and a row with all the words you would like to find");
-        System.out.println("Please input the name of your file: ");
+        // System.out.println("Please input the name of your file: ");
         // StringBuilder filename = new StringBuilder(s.nextLine() + ".txt");
-        Grid g = new Grid("Grids\\examplegrid4-7x7.txt");
+        Grid g = new Grid("Grids\\examplegrid6-15x15.txt");
+        String[] words = {"BINGO", "BOUTIQUE", "CABARET", "CARAVAN", "CHALET", "CHILDREN", "CRECHE", "DIVING", "GAMES",
+                          "PEDALO", "POOL", "POSTCARD", "REDCOAT", "SQUASH", "SWIMMING", "TENNIS", "TENTS", "TV ROOM", "VOLLEYBALL"};
         LinkedHashMap<String, CoordinatePair[]> allWordCoordinates = solverDriver.getAllCoordinatePairsOfWords(g,words);
         for (String word : allWordCoordinates.keySet()) {
             System.out.println("Word: " + word + "\n");
@@ -225,7 +227,7 @@ public class SolverDriver {
 
         // A check so that it can predetermine whether the space to create the word in a specific direction in the grid is actually possible,
         // depending on the grid size
-        if (min_x_to_create > g.getWidth() | min_y_to_create > g.getHeight()) {
+        if (min_x_to_create > g.getWidth() || min_y_to_create > g.getHeight()) {
             return false;
         }
 
