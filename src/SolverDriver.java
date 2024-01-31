@@ -10,6 +10,7 @@ public class SolverDriver {
                 "and fill it in with all the rows including a gap and a row with all the words you would like to find");
         System.out.println("Please input the name of your file: ");
         // StringBuilder filename = new StringBuilder(s.nextLine() + ".txt");
+        Grid g = new Grid("Grids\\examplegrid4-7x7.txt");
         LinkedHashMap<String, CoordinatePair[]> allWordCoordinates = solverDriver.getAllCoordinatePairsOfWords(g,words);
         for (String word : allWordCoordinates.keySet()) {
             System.out.println("Word: " + word + "\n");
@@ -31,6 +32,10 @@ public class SolverDriver {
             }
             System.out.println("\n");
         }
+    }
+
+    public static String[] getWordsFromFile(String filename) {
+        return new String[5];
     }
 
     // A method used for printing the grid

@@ -167,6 +167,12 @@ class SolverDriverTest {
                 })
         );
     }
+
+    @Test
+    @DisplayName("Gets the words from the file to search for")
+    void getWordsFromFile() {
+
+    }
 }
 
 
