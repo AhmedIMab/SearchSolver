@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 class GridTest {
@@ -33,6 +34,23 @@ class GridTest {
         int w = g.getWidth();
         Assertions.assertEquals(h, w);
     }
+
+    @Test
+    @DisplayName("Checks if an exception is thrown when the file given does not exist")
+    void Grid4() {
+        Assertions.assertThrows(FileNotFoundException.class, () -> {
+            Grid g = new Grid("Grids\\examplenonexistent.txt");
+        });
+    }
+
+    @Test
+    @DisplayName("Checks if an exception is thrown when the file given is empty")
+    void Grid5() {
+        Assertions.assertThrows(FileNotFoundException.class, () -> {
+            Grid g = new Grid("Grids\\exampleEmpty.txt");
+        });
+    }
+
 
     @Test
     @DisplayName("Check the grid created is the same as the expected grid")

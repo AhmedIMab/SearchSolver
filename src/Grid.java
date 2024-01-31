@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class Grid {
     private int width;
@@ -14,20 +11,40 @@ public class Grid {
         int w = 0;
         int h = 0;
 
-        // Main design assumption is the wordsearch is square (same height as width)
-        // Sets the width to the length of the first line
-        if (line != null) {
+        if (line == null) {
+            throw new FileNotFoundException("The file could not be found or is empty - please check you have created a file in the right location");
+        }
+        else {
+            // Main design assumption is the wordsearch is square (same height as width)
+            // Sets the width to the length of the first line
             w = line.length();
         }
 
+        int not_part_of_grid = 0;
+
         while (line != null) {
+            System.out.println("This is line:" + line);
             line = file_reader.readLine();
-            h += 1;
+            if (line != null) {
+                if (!line.equals("") && !line.equals(" ")) {
+                    // Not an empty line
+                    h += 1;
+                }
+                else {
+                    not_part_of_grid += 1;
+                }
+            }
         }
 
+        // The wordsearch will not work without being provided words
+        // represents the final line with words
+        not_part_of_grid += 1;
+
+        System.out.println("height:" + h);
+
         this.width = w;
-        this.height = h;
-        mainGrid = new Letter[w][h];
+        this.height = h - not_part_of_grid;
+        mainGrid = new Letter[this.width][this.height];
         populateGrid(filename);
     }
 

@@ -167,7 +167,7 @@ class SolverDriverTest {
     @MethodSource("provideFilesToDetectWords")
     void getWordsFromFile(String filename, String[] expected_words) throws IOException {
         Grid g = new Grid(filename);
-        String[] words = SolverDriver.getWordsFromFile(g, filename);
+        String[] words = SolverDriver.getWordsFromFile(filename);
         Assertions.assertArrayEquals(expected_words, words);
     }
 

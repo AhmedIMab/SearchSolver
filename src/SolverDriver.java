@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class SolverDriver {
@@ -9,19 +8,19 @@ public class SolverDriver {
         SolverDriver solverDriver = new SolverDriver();
         Scanner s = new Scanner(System.in);
         System.out.println("Welcome to Search Solver!");
-        System.out.println("To solve a specific wordsearch, please create a text file in the grids folder \n" +
+        System.out.println("To solve a specific wordsearch, please create a text file in the grids folder " +
                 "and fill it in with all the rows including a gap and a row with all the words you would like to find");
         System.out.println("Input the name of your file (please do not include the file extension): ");
         String filename = s.nextLine() + ".txt";
-        Grid g = new Grid(filename);
+        Grid g = new Grid("Grids\\" + filename);
         // Grid g = new Grid("Grids\\examplegrid6-15x15.txt");
-        String[] words = getWordsFromFile(g, filename);
+        String[] words = getWordsFromFile(filename);
         while (words == null) {
             System.out.println("No words were detected at the end of the file. " +
                     "Please make sure the last line contains the words separated by commas and a space");
             System.out.println("Input the name of your file (please do not include the file extension): ");
             filename = s.nextLine();
-            words = getWordsFromFile(g, filename);
+            words = getWordsFromFile(filename);
         }
         // String[] words = {"BINGO", "BOUTIQUE", "CABARET", "CARAVAN", "CHALET", "CHILDREN", "CRECHE", "DIVING", "GAMES",
         //                  "PEDALO", "POOL", "POSTCARD", "REDCOAT", "SQUASH", "SWIMMING", "TENNIS", "TENTS", "VOLLEYBALL"};
@@ -48,7 +47,7 @@ public class SolverDriver {
         }
     }
 
-    public static String[] getWordsFromFile(Grid g,String filename) throws IOException {
+    public static String[] getWordsFromFile(String filename) throws IOException {
         String[] words;
         BufferedReader br = new BufferedReader(new FileReader(filename + ".txt"));
         String lastLine = "";
