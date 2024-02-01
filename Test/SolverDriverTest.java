@@ -14,10 +14,9 @@ class SolverDriverTest {
     @ParameterizedTest
     @MethodSource("provideStringArraysForCheckingWords")
     void checkWordsAtPos(String[] allWords, char letter, int pos, String[] expected_words) {
-        SolverDriver solverDriver = new SolverDriver();
         // The below positions are defaulted as the method being tested does not use the coordinates
         Letter letterX = new Letter(letter, 0,0);
-        String[] foundWords = solverDriver.getArrayOfWordsWithLetterAtPos(allWords, letterX, pos);
+        String[] foundWords = SolverDriver.getArrayOfWordsWithLetterAtPos(allWords, letterX, pos);
         Assertions.assertArrayEquals(expected_words, foundWords);
     }
 
@@ -32,9 +31,8 @@ class SolverDriverTest {
     @ParameterizedTest
     @MethodSource("providePositionsForCheckingDirections")
     void findPossibleDirectionsAtPos(int starting_x, int starting_y, Direction[] expected_directions) throws IOException {
-        SolverDriver solverDriver = new SolverDriver();
         Grid g = new Grid("Grids\\examplegrid1-5x5.txt");
-        Direction[] directions = solverDriver.findPossibleDirectionsFromPosition(g, starting_x,starting_y);
+        Direction[] directions = SolverDriver.findPossibleDirectionsFromPosition(g, starting_x,starting_y);
         Arrays.sort(directions);
         Arrays.sort(expected_directions);
         Assertions.assertArrayEquals(expected_directions, directions);
@@ -55,9 +53,8 @@ class SolverDriverTest {
     @ParameterizedTest
     @MethodSource("provideWordsToCheckFromLetter")
     void checkWordInDirectionFromLetter(String word, Letter letter, Direction direction, boolean expected_value) throws IOException {
-        SolverDriver solverDriver = new SolverDriver();
         Grid g = new Grid("Grids\\examplegrid1-5x5.txt");
-        boolean boolX = solverDriver.checkWordInDirectionFromLetter(g, word, letter, direction);
+        boolean boolX = SolverDriver.checkWordInDirectionFromLetter(g, word, letter, direction);
         Assertions.assertEquals(expected_value, boolX);
     }
 
@@ -87,9 +84,8 @@ class SolverDriverTest {
     @ParameterizedTest
     @MethodSource("provideWordsToCheckCoords")
     void getCoordsOfWordInGrid(String word, Letter letter, Direction direction, Integer[] expectedCoords) throws IOException {
-        SolverDriver solverDriver = new SolverDriver();
         Grid g = new Grid("Grids\\examplegrid1-5x5.txt");
-        CoordinatePair[] coordinates = solverDriver.getCoordsOfWordInGrid(g, word, letter, direction);
+        CoordinatePair[] coordinates = SolverDriver.getCoordsOfWordInGrid(g, word, letter, direction);
         Integer[] calculatedCoords = new Integer[word.length()*2];
         int ptr2 = 0;
         for (int i=0; i<calculatedCoords.length; i=i+2) {
@@ -119,8 +115,7 @@ class SolverDriverTest {
     @MethodSource("provideWordsAndCoordinatePairs")
     // Easier to make an integer array which holds x coordinate followed by y coordinate and then compare 2 integer arrays
     void getAllCoordinatePairsOfWords(Grid g, String[] words, Integer[][] expected_coordinatePairs) {
-        SolverDriver solverDriver = new SolverDriver();
-        LinkedHashMap<String, CoordinatePair[]> calculatedHashmap = solverDriver.getAllCoordinatePairsOfWords(g, words);
+        LinkedHashMap<String, CoordinatePair[]> calculatedHashmap = SolverDriver.getAllCoordinatePairsOfWords(g, words);
         int ptr2;
         for (int i=0;i<expected_coordinatePairs.length; i++) {
             ptr2 = 0;
@@ -167,7 +162,7 @@ class SolverDriverTest {
     @MethodSource("provideFilesToDetectWords")
     void getWordsFromFile(String filename, String[] expected_words) throws IOException {
         Grid g = new Grid(filename);
-        String[] words = SolverDriver.getWordsFromFile(filename, g.getHeight());
+        String[] words = SolverDriver.getWordsFromFile(filename, g);
         Assertions.assertArrayEquals(expected_words, words);
     }
 

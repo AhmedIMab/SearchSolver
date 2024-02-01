@@ -1,11 +1,13 @@
 import java.io.*;
 
 public class Grid {
+    private static Grid gridInstance;
     private int width;
     private int height;
-    public Letter[][] mainGrid;
+    private Letter[][] mainGrid;
 
-    public Grid(String filename) throws IOException {
+
+    private Grid(String filename) throws IOException {
         BufferedReader file_reader = new BufferedReader(new FileReader(filename));
         String line = file_reader.readLine();
         int w = 0;
@@ -69,6 +71,9 @@ public class Grid {
         }
     }
 
+    public Letter[][] getMainGrid() {
+        return mainGrid;
+    }
 
     public int getHeight() {
         return this.height;

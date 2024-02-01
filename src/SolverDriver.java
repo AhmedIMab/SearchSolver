@@ -14,14 +14,14 @@ public class SolverDriver {
         String filename = "Grids\\" + s.nextLine() + ".txt";
         //String filename = "Grids\\examplegrid1-5x5.txt";
         Grid g = new Grid(filename);
-        String[] words = getWordsFromFile(filename, g.getHeight());
+        String[] words = getWordsFromFile(filename, g);
         while (words == null) {
             System.out.println("No words were detected at the end of the file. " +
                     "Please make sure the last line contains the words separated by commas");
             System.out.println("Input the name of your file (please do not include the file extension): ");
             filename = "Grids\\" + s.nextLine() + ".txt";
             g = new Grid(filename);
-            words = getWordsFromFile(filename, g.getHeight());
+            words = getWordsFromFile(filename, g);
         }
         LinkedHashMap<String, CoordinatePair[]> allWordCoordinates = solverDriver.getAllCoordinatePairsOfWords(g,words);
         for (String word : allWordCoordinates.keySet()) {
@@ -47,12 +47,13 @@ public class SolverDriver {
 
 
     // Grid height is needed to detect in the case the user does not add any words at the end
-    public static String[] getWordsFromFile(String filename, int gridHeight) throws IOException {
+    public static String[] getWordsFromFile(String filename, Grid g) throws IOException {
         String[] words;
         BufferedReader br = new BufferedReader(new FileReader(filename));
         String lastLine = "";
         String currentLine = br.readLine();
         int num_lines = 0;
+        int gridHeight = g.getHeight();
 
         while (currentLine != null) {
             lastLine = currentLine;
@@ -96,7 +97,7 @@ public class SolverDriver {
     }
 
     // The main method to find all the words and add them to a linked hashmap
-    public LinkedHashMap<String, CoordinatePair[]> getAllCoordinatePairsOfWords(Grid g, String[] words) {
+    public static LinkedHashMap<String, CoordinatePair[]> getAllCoordinatePairsOfWords(Grid g, String[] words) {
         // Linked HashMap used as it is preferred to have the order of words maintained
         LinkedHashMap<String, CoordinatePair[]> allWordCoordinates = new LinkedHashMap<>();
         List<String> wordsToSearch = new ArrayList<>(Arrays.asList(words));
@@ -139,7 +140,7 @@ public class SolverDriver {
         return allWordCoordinates;
     }
 
-    public String[] getArrayOfWordsWithLetterAtPos(String[] words, Letter letterX, int pos) {
+    public static String[] getArrayOfWordsWithLetterAtPos(String[] words, Letter letterX, int pos) {
         // Assuming the potentially all the words to find could be
         // Nope, have to use an ArrayList as otherwise filled with null values
         List<String> foundStrings = new ArrayList<String>();
@@ -153,7 +154,7 @@ public class SolverDriver {
     }
 
     // Regardless of the word, this function tries to find the possible directions a word can be made by using the position
-    public Direction[] findPossibleDirectionsFromPosition(Grid g, int starting_x, int starting_y) {
+    public static Direction[] findPossibleDirectionsFromPosition(Grid g, int starting_x, int starting_y) {
         List<Direction> directions = new ArrayList<>();
         // For the top y rows
         if (starting_y == 0) {
@@ -259,7 +260,7 @@ public class SolverDriver {
     }
 
     // Tries to find if a word can be made in a given direction
-    public boolean checkWordInDirectionFromLetter(Grid g, String word, Letter letter, Direction direction) {
+    public static boolean checkWordInDirectionFromLetter(Grid g, String word, Letter letter, Direction direction) {
         boolean found = false;
         Integer[] change = getChangeInCoordsForTraversing(direction);
         int xchange = change[0];
@@ -297,7 +298,7 @@ public class SolverDriver {
 
     // This method will only be called when the word has been confirmed to be in the wordsearch and in a specific direction
     // Returns the coordinates of all the letters of the word
-    public CoordinatePair[] getCoordsOfWordInGrid(Grid g, String word, Letter letter, Direction direction) {
+    public static CoordinatePair[] getCoordsOfWordInGrid(Grid g, String word, Letter letter, Direction direction) {
         CoordinatePair[] coords = new CoordinatePair[word.length()];
         Integer[] change = getChangeInCoordsForTraversing(direction);
         int xchange = change[0];
