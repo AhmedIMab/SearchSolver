@@ -61,10 +61,10 @@ class GridTest {
 
         String[] actualRows = new String[5];
         // Convert the actual grid to rows of strings stored in a string array
-        for (int i=0; i<g.mainGrid.length; i++) {
+        for (int i=0; i<g.getMainGrid().length; i++) {
             StringBuilder rowX = new StringBuilder();
             for (int j=0;j<actualRows.length; j++) {
-                rowX.append(g.mainGrid[j][i].letter);
+                rowX.append(g.getMainGrid()[j][i].letter);
             }
             actualRows[i] = String.valueOf(rowX);
         }
@@ -84,10 +84,10 @@ class GridTest {
 
         String[] actualRows = new String[6];
         // Convert the actual grid to rows of strings stored in a string array
-        for (int i=0; i<g.mainGrid.length; i++) {
+        for (int i=0; i<g.getMainGrid().length; i++) {
             StringBuilder rowX = new StringBuilder();
             for (int j=0;j<actualRows.length; j++) {
-                rowX.append(g.mainGrid[j][i].letter);
+                rowX.append(g.getMainGrid()[j][i].letter);
             }
             actualRows[i] = String.valueOf(rowX);
         }

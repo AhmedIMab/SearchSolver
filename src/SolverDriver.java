@@ -5,14 +5,12 @@ import java.util.*;
 
 public class SolverDriver {
     public static void main(String[] args) throws IOException {
-        SolverDriver solverDriver = new SolverDriver();
         Scanner s = new Scanner(System.in);
         System.out.println("Welcome to Search Solver!");
         System.out.println("To solve a specific wordsearch, please create a text file in the grids folder " +
                 "and fill it in with all the rows including a gap and a row with all the words you would like to find");
         System.out.println("Input the name of your file (please do not include the file extension): ");
         String filename = "Grids\\" + s.nextLine() + ".txt";
-        //String filename = "Grids\\examplegrid1-5x5.txt";
         Grid g = new Grid(filename);
         String[] words = getWordsFromFile(filename, g);
         while (words == null) {
@@ -23,13 +21,13 @@ public class SolverDriver {
             g = new Grid(filename);
             words = getWordsFromFile(filename, g);
         }
-        LinkedHashMap<String, CoordinatePair[]> allWordCoordinates = solverDriver.getAllCoordinatePairsOfWords(g,words);
+        LinkedHashMap<String, CoordinatePair[]> allWordCoordinates = SolverDriver.getAllCoordinatePairsOfWords(g,words);
         for (String word : allWordCoordinates.keySet()) {
             System.out.println("Word: " + word + "\n");
             CoordinatePair[] coordPairsX = allWordCoordinates.get(word);
-            for (int row=0; row<g.mainGrid.length; row++) {
+            for (int row=0; row<g.getMainGrid().length; row++) {
                 StringBuilder rowX = new StringBuilder();
-                for (int col=0; col<g.mainGrid[row].length; col++) {
+                for (int col=0; col<g.getMainGrid()[row].length; col++) {
                     // If it's part of the word, reveal it!
                     if (partOfCoords(coordPairsX, col, row)) {
                         rowX.append(g.getLetterAtCoord(col,row));
@@ -108,12 +106,12 @@ public class SolverDriver {
         // Once it finds the word and the direction to make it, gets the coordinates for making the word
         // Adds it to the hashmap and return once all words were found or the grid has been fully traversed
         // Outer for loop loops through the rows, inner loops through every column
-        for (int row=0; row<g.mainGrid.length; row++) {
-            for (int col=0; col<g.mainGrid[row].length; col++) {
+        for (int row=0; row<g.getMainGrid().length; row++) {
+            for (int col=0; col<g.getMainGrid()[row].length; col++) {
                 if (num_found == words.length) {
                     return allWordCoordinates;
                 }
-                Letter letterX = g.mainGrid[col][row];
+                Letter letterX = g.getMainGrid()[col][row];
                 Direction[] possible_directions = findPossibleDirectionsFromPosition(g, letterX.xcoord, letterX.ycoord);
                 // New String[0] will create an appropriately sized array when creating the array as opposed to an array with a specific number of elements
                 String[] possible_words = getArrayOfWordsWithLetterAtPos(wordsToSearch.toArray(new String[0]), letterX, 0);
