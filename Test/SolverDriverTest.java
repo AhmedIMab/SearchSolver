@@ -12,15 +12,15 @@ import java.util.stream.Stream;
 class SolverDriverTest {
     @DisplayName("Checks if the possible words with the letter at the position are the same")
     @ParameterizedTest
-    @MethodSource("provideStringArraysForCheckingWords")
-    void checkWordsAtPos(String[] allWords, char letter, int pos, String[] expected_words) {
+    @MethodSource("ArraysOfWordsForCheckingIfAWordHasASpecificLetterAtASpecificPosition")
+    void ChecksIfAWordHasASpecificLetterAtASpecificPosition(String[] allWords, char letter, int pos, String[] expected_words) {
         // The below positions are defaulted as the method being tested does not use the coordinates
         Letter letterX = new Letter(letter, 0,0);
         String[] foundWords = SolverDriver.getArrayOfWordsWithLetterAtPos(allWords, letterX, pos);
         Assertions.assertArrayEquals(expected_words, foundWords);
     }
 
-    private static Stream<Arguments> provideStringArraysForCheckingWords() {
+    private static Stream<Arguments> ArraysOfWordsForCheckingIfAWordHasASpecificLetterAtASpecificPosition() {
         return Stream.of(
                 Arguments.of(new String[]{"HORSE","HAPPY", "TRAIN"}, 'H', 0, new String[]{"HORSE", "HAPPY"}),
                 Arguments.of(new String[]{"HORSE","HAPPY", "TRAIN"}, 'A', 1, new String[]{"HAPPY"})
@@ -29,8 +29,8 @@ class SolverDriverTest {
 
     @DisplayName("Checks if the possible directions to make a word from a starting position are valid")
     @ParameterizedTest
-    @MethodSource("providePositionsForCheckingDirections")
-    void findPossibleDirectionsAtPos(int starting_x, int starting_y, Direction[] expected_directions) throws IOException {
+    @MethodSource("providePositionsForCheckingDirectionsToConstructAWord")
+    void TestsThePossibleDirectionsThatCanBeTakenToConstructAWordFromASpecificPosition(int starting_x, int starting_y, Direction[] expected_directions) throws IOException {
         Grid g = new Grid("Grids\\examplegrid1-5x5.txt");
         Direction[] directions = SolverDriver.findPossibleDirectionsFromPosition(g, starting_x,starting_y);
         Arrays.sort(directions);
@@ -38,7 +38,7 @@ class SolverDriverTest {
         Assertions.assertArrayEquals(expected_directions, directions);
     }
 
-    private static Stream<Arguments> providePositionsForCheckingDirections() {
+    private static Stream<Arguments> providePositionsForCheckingDirectionsToConstructAWord() {
         return Stream.of(
                 Arguments.of(0,0,new Direction[]{Direction.RIGHT, Direction.BOTTOMRIGHT, Direction.DOWN}),
                 Arguments.of(1,0,new Direction[]{Direction.RIGHT, Direction.BOTTOMRIGHT, Direction.DOWN, Direction.BOTTOMLEFT, Direction.LEFT}),
@@ -51,14 +51,14 @@ class SolverDriverTest {
 
     @DisplayName("Checks if a word can be made in a specific direction")
     @ParameterizedTest
-    @MethodSource("provideWordsToCheckFromLetter")
-    void checkWordInDirectionFromLetter(String word, Letter letter, Direction direction, boolean expected_value) throws IOException {
+    @MethodSource("provideWordsToCheckIfAWordCanBeMadeInASpecificDirectionFromLetter")
+    void checksIfAWordCanBeMadeInASpecificDirectionFromALetterInTheGrid(String word, Letter letter, Direction direction, boolean expected_value) throws IOException {
         Grid g = new Grid("Grids\\examplegrid1-5x5.txt");
         boolean boolX = SolverDriver.checkWordInDirectionFromLetter(g, word, letter, direction);
         Assertions.assertEquals(expected_value, boolX);
     }
 
-    private static Stream<Arguments> provideWordsToCheckFromLetter() {
+    private static Stream<Arguments> provideWordsToCheckIfAWordCanBeMadeInASpecificDirectionFromLetter() {
         return Stream.of(
                 Arguments.of("HORSE", new Letter('H', 0,0), Direction.RIGHT, true),
                 Arguments.of("HORSE", new Letter('H', 0,0), Direction.BOTTOMRIGHT, false),
@@ -80,10 +80,10 @@ class SolverDriverTest {
 
     // To test the coords and avoid issues with objects of CoordinatePair, format will be comparing 2 integer arrays
     // Only given words actually in the wordsearch as the method being tested will only be run after checking the word can be made
-    @DisplayName("Tests to see if the coordinates for making a word are correct")
+    @DisplayName("Tests the coordinates that make up a word on the grid correctly build the word")
     @ParameterizedTest
     @MethodSource("provideWordsToCheckCoords")
-    void getCoordsOfWordInGrid(String word, Letter letter, Direction direction, Integer[] expectedCoords) throws IOException {
+    void checkCoordsOfWordInWordsearch(String word, Letter letter, Direction direction, Integer[] expectedCoords) throws IOException {
         Grid g = new Grid("Grids\\examplegrid1-5x5.txt");
         CoordinatePair[] coordinates = SolverDriver.getCoordsOfWordInGrid(g, word, letter, direction);
         Integer[] calculatedCoords = new Integer[word.length()*2];
@@ -112,9 +112,9 @@ class SolverDriverTest {
 
     @ParameterizedTest(name = "{index} => grid={0},words={1},expected_ints={2}")
     @DisplayName("Checks if the LinkedHashMap returned has the right coordinates for all the words")
-    @MethodSource("provideWordsAndCoordinatePairs")
+    @MethodSource("provideWordsAndCoordinatePairsToCheckTheCoordinatesOfTheConstructedWords")
     // Easier to make an integer array which holds x coordinate followed by y coordinate and then compare 2 integer arrays
-    void getAllCoordinatePairsOfWords(Grid g, String[] words, Integer[][] expected_coordinatePairs) {
+    void TestsTheCoordinatesOfAllTheWordsFoundInTheWordsearch(Grid g, String[] words, Integer[][] expected_coordinatePairs) {
         LinkedHashMap<String, CoordinatePair[]> calculatedHashmap = SolverDriver.getAllCoordinatePairsOfWords(g, words);
         int ptr2;
         for (int i=0;i<expected_coordinatePairs.length; i++) {
@@ -139,7 +139,7 @@ class SolverDriverTest {
         }
     }
 
-    private static Stream<Arguments> provideWordsAndCoordinatePairs() throws IOException {
+    private static Stream<Arguments> provideWordsAndCoordinatePairsToCheckTheCoordinatesOfTheConstructedWords () throws IOException {
         return Stream.of(
                 Arguments.of(new Grid("Grids\\examplegrid1-5x5.txt"), new String[]{"HORSE", "BAT", "DOG", "MOUSE", "MO"}, new Integer[][]{
                         {0,0,1,0,2,0,3,0,4,0}, {2,2,3,3,4,4}, {1,2,1,3,1,4}, {4,1,3,1,2,1,1,1,0,1}, {4,1,4,2}
@@ -158,7 +158,7 @@ class SolverDriverTest {
     }
 
     @ParameterizedTest
-    @DisplayName("Gets the words from the file to search for")
+    @DisplayName("Tests if the function can read the file and get the words that will searched for in the wordsearch")
     @MethodSource("provideFilesToDetectWords")
     void getWordsFromFile(String filename, String[] expected_words) throws IOException {
         Grid g = new Grid(filename);
